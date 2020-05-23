@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hoodtrooper map{% endblock %}
+
+{% block stylesheets %}
+
+    {{ encore_entry_link_tags('hoodtrooper_styles') }}
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="map-wrapper">
+        <div>
+        <div class="map__button">
+            <div class="loader">
+                <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
+        </div>
+        <div id="mapModal" class="map__modal">
+            <div class="map__container">
+                <div class="map__close">
+                    <button id="mapClose" class="close__button" type="button"></button>
+                </div>
+                <div id="map"></div>
+                <div id="mapMenu" class="map__menu opened">
+                    <div class="menu__list">
+                        <button id="toggleMapMenu" class="toggle__map opened" type="button"><span></span><span></span></button>
+                        <div class="menu__item item__filter">
+                            <div class="category__select">
+                                <div id="current-category" class="current__category"></div>
+                                <div id="category-expanded-list" class="expanded__wrapper"></div>
+                            </div>
+                        </div>
+                        <div class="menu__item item__summary">
+                            <div id="summary-list"></div>
+                        </div>
+                        <div class="menu__item item__categories">
+                            <div id="category-list"></div>
+                        </div>
+                        <div class="menu__item item__types">
+                            <div id="type-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ encore_entry_script_tags('hoodtrooper_map') }}
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdg7mYxGd6QjFmAIo5gmy9TQb0ac1XXdA"></script>
+
+{% endblock %}
