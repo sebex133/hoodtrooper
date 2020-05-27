@@ -4,6 +4,7 @@ namespace App\Security;
 
 use App\Entity\HoodtrooperUser;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -97,7 +98,9 @@ class HoodtrooperUserAuthenticator extends AbstractFormLoginAuthenticator implem
         }
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        return new RedirectResponse($this->urlGenerator->generate('hoodtrooper'));
+        return new JsonResponse(['logged_in_auth' => TRUE]);
+//        return new RedirectResponse($this->urlGenerator->generate('hoodtrooper'));
+
 //        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

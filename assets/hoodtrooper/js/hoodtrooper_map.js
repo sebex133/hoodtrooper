@@ -141,6 +141,10 @@ menuToggler.click(function () {
     $(this).toggleClass('opened')
 })
 
+function reloadPage(){
+    window.location.reload();
+}
+
 $(document).ready(function(){
     mapModal.addClass('showModal');
     initMap();
@@ -152,6 +156,31 @@ $(document).ready(function(){
         $('#popup .modal-title').html(loadUrl);
         $('#popup .inside').html('loading...');
         $('#popup .inside').load('/' + loadUrl);
+    });
+
+    $(document).on('submit', '#loginForm', function(e) {
+        e.preventDefault();
+
+        const form = $(this);
+
+        $.ajax({
+            url : form.attr('action'),
+            type: form.attr('method'),
+            data : form.serialize(),
+            success: function(data) {
+                if(data.logged_in_auth || data.logged_in){
+                    console.log('reloading');
+                    reloadPage();
+                // }else if(data.failed_login){
+                //     console.log('failed login');
+                //     $('#popup .inside').html('loading failed login...');
+                //     $('#popup .inside').html(data.failed_login);
+                }else{
+                    $('#popup .inside').html('elsee...');
+                    $('#popup .inside').html(data);
+                }
+            }
+        });
     });
 });
 
