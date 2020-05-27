@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HoodtrooperPlace index{% endblock %}
+
+{% block body %}
+    <h1>HoodtrooperPlace index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Coordinates_latlng</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for hoodtrooper_place in hoodtrooper_places %}
+            <tr>
+                <td>{{ hoodtrooper_place.id }}</td>
+                <td>{{ hoodtrooper_place.title }}</td>
+                <td>{{ hoodtrooper_place.coordinatesLatlng }}</td>
+                <td>{{ hoodtrooper_place.description }}</td>
+                <td>
+                    <a href="{{ path('hoodtrooper_place_show', {'id': hoodtrooper_place.id}) }}">show</a>
+                    <a href="{{ path('hoodtrooper_place_edit', {'id': hoodtrooper_place.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('hoodtrooper_place_new') }}">Create new</a>
+{% endblock %}
