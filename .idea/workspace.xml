@@ -3,16 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="a87e39e0-e6ef-499c-ba1c-a090a39bf802" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/doctrine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/doctrine.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/hoodtrooper/js/hoodtrooper_map.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/hoodtrooper/js/hoodtrooper_map.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/hoodtrooper/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/hoodtrooper/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/register.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
       <executable />
@@ -137,6 +140,7 @@
   <component name="ProjectId" id="1cIojRF0vEhWDoqrjYAVRXl44Le" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -165,7 +169,9 @@
       <updated>1590225603409</updated>
       <workItem from="1590225610385" duration="31000" />
       <workItem from="1590225664627" duration="5257000" />
-      <workItem from="1590248785271" duration="9774000" />
+      <workItem from="1590248785271" duration="12301000" />
+      <workItem from="1590398454091" duration="3715000" />
+      <workItem from="1590569054041" duration="4666000" />
     </task>
     <servers />
   </component>
@@ -181,10 +187,10 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="301" y="72" key="SettingsEditor/0.0.1600.860/1600.-479.1920.1040@0.0.1600.860" timestamp="1590248910911" />
-    <state x="496" y="254" key="com.intellij.ide.util.TipDialog" timestamp="1590248787589">
+    <state x="496" y="254" key="com.intellij.ide.util.TipDialog" timestamp="1590569061239">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="496" y="254" key="com.intellij.ide.util.TipDialog/0.0.1600.860/1600.-479.1920.1040@0.0.1600.860" timestamp="1590248787589" />
+    <state x="496" y="254" key="com.intellij.ide.util.TipDialog/0.0.1600.860/1600.-479.1920.1040@0.0.1600.860" timestamp="1590569061239" />
     <state x="496" y="254" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1590225664731" />
     <state x="463" y="180" width="672" height="678" key="search.everywhere.popup" timestamp="1590252183653">
       <screen x="0" y="0" width="1600" height="860" />
@@ -196,7 +202,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/templates/hoodtrooper/index.html.twig</url>
-          <line>12</line>
+          <line>13</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

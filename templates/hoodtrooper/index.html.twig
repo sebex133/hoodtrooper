@@ -4,49 +4,70 @@
 
 {% block stylesheets %}
 
+    {{ encore_entry_link_tags('hoodtrooper_map') }}
     {{ encore_entry_link_tags('hoodtrooper_styles') }}
 
 {% endblock %}
 
 {% block body %}
 
-    <div class="map-wrapper">
-        <div>
-        <div class="map__button">
-            <div class="loader">
-                <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-            </div>
+<div class="map-wrapper">
+    <div class="map__button">
+        <div class="loader">
+            <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
         </div>
-        <div id="mapModal" class="map__modal">
-            <div class="map__container">
-                <div class="map__close">
-                    <button id="mapClose" class="close__button" type="button"></button>
-                </div>
-                <div id="map"></div>
-                <div id="mapMenu" class="map__menu opened">
-                    <div class="menu__list">
-                        <button id="toggleMapMenu" class="toggle__map opened" type="button"><span></span><span></span></button>
-                        <div class="menu__item item__filter">
-                            <div class="category__select">
-                                <div id="current-category" class="current__category"></div>
-                                <div id="category-expanded-list" class="expanded__wrapper"></div>
-                            </div>
+    </div>
+    <div id="mapModal" class="map__modal">
+        <div class="map__container">
+            <div class="map__close">
+                {% if app.user %}
+                    <a class="btn btn-light" href="{{ path('app_logout') }}">Logout</a>
+                {% else %}
+                    <button class="btn btn-dark" data-toggle="modal" data-target="#exampleModalCenter" data-modal-content="login">Login</button>
+                    <button class="btn btn-dark" data-toggle="modal" data-target="#exampleModalCenter" data-modal-content="register">Register</button>
+                {% endif %}
+{#                <button id="mapClose" class="close__button" type="button"></button>#}
+            </div>
+            <div id="modal"></div>
+            <div id="map"></div>
+            <div id="mapMenu" class="map__menu opened">
+                <div class="menu__list">
+                    <button id="toggleMapMenu" class="toggle__map opened" type="button"><span></span><span></span></button>
+                    <div class="menu__item item__filter">
+                        <div class="category__select">
+                            <div id="current-category" class="current__category"></div>
+                            <div id="category-expanded-list" class="expanded__wrapper"></div>
                         </div>
-                        <div class="menu__item item__summary">
-                            <div id="summary-list"></div>
-                        </div>
-                        <div class="menu__item item__categories">
-                            <div id="category-list"></div>
-                        </div>
-                        <div class="menu__item item__types">
-                            <div id="type-list"></div>
-                        </div>
+                    </div>
+                    <div class="menu__item item__summary">
+                        <div id="summary-list"></div>
+                    </div>
+                    <div class="menu__item item__categories">
+                        <div id="category-list"></div>
+                    </div>
+                    <div class="menu__item item__types">
+                        <div id="type-list"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" id="popup">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Loading note...</h5>
+                <button type="button" class="close clear-modal-data" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body inside">
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

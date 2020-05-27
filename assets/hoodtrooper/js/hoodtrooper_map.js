@@ -7,6 +7,9 @@
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
+require('bootstrap');
+
+import '../scss/global.scss';
 
 //Hoodtrooper map
 const projects = [
@@ -142,6 +145,14 @@ $(document).ready(function(){
     mapModal.addClass('showModal');
     initMap();
     body.attr('overflow-y', 'hidden')
+
+    $('button[data-toggle=\'modal\']').on('click', function(){
+        let loadUrl = $(this).data('modal-content');
+        console.log('loading...');
+        $('#popup .modal-title').html(loadUrl);
+        $('#popup .inside').html('loading...');
+        $('#popup .inside').load('/' + loadUrl);
+    });
 });
 
 // globals - they should be initialized inside view (refactor)
@@ -467,8 +478,10 @@ function initMap () {
      * @type {google.maps.Map}
      */
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 2,
-        minZoom: 2,
+        zoom: 3,
+        minZoom: 3,
+        cursor: 'default',
+        draggableCursor: 'default',
         center: { lat: 28.306877, lng: 1.746233 },
         fullscreenControl: false,
         mapTypeControl: false,
