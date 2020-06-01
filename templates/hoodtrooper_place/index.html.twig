@@ -12,6 +12,7 @@
                 <th>Title</th>
                 <th>Coordinates_latlng</th>
                 <th>Description</th>
+                <th>Filename</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +23,13 @@
                 <td>{{ hoodtrooper_place.title }}</td>
                 <td>{{ hoodtrooper_place.coordinatesLatlng }}</td>
                 <td>{{ hoodtrooper_place.description }}</td>
+                <td>
+                    <p>
+                        {{ hoodtrooper_place.placeImageFilename }}
+                    </p>
+{#                    <img src="{{ asset(hoodtrooper_place_images_directory ~ '/' ~ hoodtrooper_place.placeImageFilename) }}"/>#}
+                    <img src="{{ '/uploads/hoodtrooper_places_images/' ~ hoodtrooper_place.placeImageFilename }}"/>
+                </td>
                 <td>
                     <a href="{{ path('hoodtrooper_place_show', {'id': hoodtrooper_place.id}) }}">show</a>
                     <a href="{{ path('hoodtrooper_place_edit', {'id': hoodtrooper_place.id}) }}">edit</a>

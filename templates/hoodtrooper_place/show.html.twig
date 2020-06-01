@@ -23,6 +23,16 @@
                 <th>Description</th>
                 <td>{{ hoodtrooper_place.description }}</td>
             </tr>
+            <tr>
+                <th>Image</th>
+                <td>
+                    <p>
+                        {{ hoodtrooper_place.placeImageFilename }}
+                    </p>
+                    {#                    <img src="{{ asset(hoodtrooper_place_images_directory ~ '/' ~ hoodtrooper_place.placeImageFilename) }}"/>#}
+                    <img src="{{ '/uploads/hoodtrooper_places_images/' ~ hoodtrooper_place.placeImageFilename }}"/>
+                </td>
+            </tr>
         </tbody>
     </table>
 

@@ -32,6 +32,11 @@ class HoodtrooperPlace
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $place_image_filename;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class HoodtrooperPlace
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getPlaceImageFilename(): ?string
+    {
+        return $this->place_image_filename;
+    }
+
+    public function setPlaceImageFilename(?string $placeImageFilename): self
+    {
+        $this->place_image_filename = $placeImageFilename;
 
         return $this;
     }

@@ -9,6 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @Route("/hoodtrooper/place")
@@ -22,13 +25,14 @@ class HoodtrooperPlaceController extends AbstractController
     {
         return $this->render('hoodtrooper_place/index.html.twig', [
             'hoodtrooper_places' => $hoodtrooperPlaceRepository->findAll(),
+            'hoodtrooper_place_images_directory' => $this->getParameter('hoodtrooper_place_images_directory'),
         ]);
     }
 
     /**
      * @Route("/new", name="hoodtrooper_place_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, SluggerInterface $slugger): Response
     {
         //only logged in users
         if (!$this->getUser()) {
@@ -43,6 +47,29 @@ class HoodtrooperPlaceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+
+            if($imageFile){
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $imageFile->move(
+                        $this->getParameter('hoodtrooper_place_images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $hoodtrooperPlace->setPlaceImageFilename($newFilename);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($hoodtrooperPlace);
             $entityManager->flush();
@@ -73,12 +100,35 @@ class HoodtrooperPlaceController extends AbstractController
     /**
      * @Route("/{id}/edit", name="hoodtrooper_place_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, HoodtrooperPlace $hoodtrooperPlace): Response
+    public function edit(Request $request, HoodtrooperPlace $hoodtrooperPlace, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(HoodtrooperPlaceType::class, $hoodtrooperPlace);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+
+            if($imageFile){
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $imageFile->move(
+                        $this->getParameter('hoodtrooper_place_images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $hoodtrooperPlace->setPlaceImageFilename($newFilename);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('hoodtrooper_place_index');
@@ -87,6 +137,7 @@ class HoodtrooperPlaceController extends AbstractController
         return $this->render('hoodtrooper_place/edit.html.twig', [
             'hoodtrooper_place' => $hoodtrooperPlace,
             'form' => $form->createView(),
+            'latLngVal' => '',
         ]);
     }
 
