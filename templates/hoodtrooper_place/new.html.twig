@@ -1,11 +1,26 @@
-{% extends 'base.html.twig' %}
+{#{% extends 'base.html.twig' %}#}
 
-{% block title %}New HoodtrooperPlace{% endblock %}
+{#{% block title %}New HoodtrooperPlace{% endblock %}#}
+
+{#{% block stylesheets %}#}
+
+{#    {{ encore_entry_link_tags('hoodtrooper_map') }}#}
+{#    {{ encore_entry_link_tags('hoodtrooper_styles') }}#}
+
+{#{% endblock %}#}
 
 {% block body %}
-    <h1>Create new HoodtrooperPlace</h1>
+{#    <h1>Create new HoodtrooperPlace</h1>#}
 
-    {{ include('hoodtrooper_place/_form.html.twig') }}
+    {{ include('hoodtrooper_place/_form.html.twig', { latLngVal: latLng }) }}
 
-    <a href="{{ path('hoodtrooper_place_index') }}">back to list</a>
+{#    <a href="{{ path('hoodtrooper_place_index') }}">back to list</a>#}
 {% endblock %}
+
+{#{% block javascripts %}#}
+
+{#    {{ encore_entry_script_tags('hoodtrooper_map') }}#}
+
+{#    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdg7mYxGd6QjFmAIo5gmy9TQb0ac1XXdA"></script>#}
+
+{#{% endblock %}#}

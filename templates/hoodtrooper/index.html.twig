@@ -23,8 +23,8 @@
                 {% if app.user %}
                     <a class="btn btn-light" href="{{ path('app_logout') }}">Logout</a>
                 {% else %}
-                    <button class="btn btn-dark" data-toggle="modal" data-target="#exampleModalCenter" data-modal-content="login">Login</button>
-                    <button class="btn btn-dark" data-toggle="modal" data-target="#exampleModalCenter" data-modal-content="register">Register</button>
+                    <button class="btn btn-dark" data-toggle="modal" data-target="#hoodtrooperModal" data-modal-title="{{ sign_in_title }}" data-modal-url="{{ path('app_login') }}">{{ sign_in_title }}</button>
+                    <button class="btn btn-light" data-toggle="modal" data-target="#hoodtrooperModal" data-modal-title="{{ sign_up_title }}" data-modal-url="{{ path('app_register') }}">{{ sign_up_title }}</button>
                 {% endif %}
 {#                <button id="mapClose" class="close__button" type="button"></button>#}
             </div>
@@ -55,16 +55,23 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content" id="popup">
+<div class="modal fade" id="hoodtrooperModal" tabindex="-1" role="dialog" aria-labelledby="hoodtrooperModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Loading note...</h5>
+                <h5 class="modal-title"></h5>
                 <button type="button" class="close clear-modal-data" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body inside">
+            <div class="modal-body">
+                <div class="d-none modal-loader pb-3">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="inside">
+                </div>
             </div>
         </div>
     </div>

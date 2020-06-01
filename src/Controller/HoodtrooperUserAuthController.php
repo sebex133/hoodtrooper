@@ -16,7 +16,7 @@ class HoodtrooperUserAuthController extends AbstractController
     {
         if ($this->getUser()) {
             return $this->json(['logged_in' => TRUE]);
-//            return $this->redirectToRoute('hoodtrooper');
+            return $this->redirectToRoute('hoodtrooper');
         }
 
         // get the login error if there is one

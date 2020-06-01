@@ -98,7 +98,7 @@ class HoodtrooperUserAuthenticator extends AbstractFormLoginAuthenticator implem
         }
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        return new JsonResponse(['logged_in_auth' => TRUE]);
+        return new JsonResponse(['success_ajax_form' => TRUE]);
 //        return new RedirectResponse($this->urlGenerator->generate('hoodtrooper'));
 
 //        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);

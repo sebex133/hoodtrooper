@@ -1,4 +1,16 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{#TODO action musi byc dynamiczne bo bedzie rozne dla new, edit, delete itp#}
+{{ form_start(form, {attr: {class: 'ajax-form', action: 'hoodtrooper/place/new' } })  }}
+{#    {{ form_widget(form) }}#}
+
+    {{ form_row(form.title) }}
+    {{ form_row(form.description) }}
+    {% if latLngVal %}
+        {{ form_row(form.coordinates_latlng, {attr: {disabled: 'disabled', value: latLngVal } }) }}
+    {% else %}
+        {{ form_row(form.coordinates_latlng, {attr: {disabled: 'disabled'} }) }}
+    {% endif %}
+
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

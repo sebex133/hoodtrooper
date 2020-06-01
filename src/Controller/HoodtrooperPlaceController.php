@@ -30,6 +30,14 @@ class HoodtrooperPlaceController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        //only logged in users
+        if (!$this->getUser()) {
+            return $this->render('hoodtrooper_place/place_tooltip.html.twig', [
+                'sign_in_title' => 'Sign in',
+                'sign_up_title' => 'Sign up',
+            ]);
+        }
+
         $hoodtrooperPlace = new HoodtrooperPlace();
         $form = $this->createForm(HoodtrooperPlaceType::class, $hoodtrooperPlace);
         $form->handleRequest($request);
@@ -39,12 +47,16 @@ class HoodtrooperPlaceController extends AbstractController
             $entityManager->persist($hoodtrooperPlace);
             $entityManager->flush();
 
-            return $this->redirectToRoute('hoodtrooper_place_index');
+            return $this->json(['success_ajax_form' => TRUE]);
+//            return $this->redirectToRoute('hoodtrooper_place_index');
         }
+
+        $latLng = $request->query->get('latlng_from_map');
 
         return $this->render('hoodtrooper_place/new.html.twig', [
             'hoodtrooper_place' => $hoodtrooperPlace,
             'form' => $form->createView(),
+            'latLng' => $latLng ? $latLng : '',
         ]);
     }
 

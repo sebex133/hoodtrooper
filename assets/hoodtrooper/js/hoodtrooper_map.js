@@ -150,34 +150,58 @@ $(document).ready(function(){
     initMap();
     body.attr('overflow-y', 'hidden')
 
-    $('button[data-toggle=\'modal\']').on('click', function(){
-        let loadUrl = $(this).data('modal-content');
-        console.log('loading...');
-        $('#popup .modal-title').html(loadUrl);
-        $('#popup .inside').html('loading...');
-        $('#popup .inside').load('/' + loadUrl);
+    //Hide show
+    $('#hoodtrooperModal').on('hidden.bs.modal', function (e) {
+        $('#hoodtrooperModal .modal-title').html('');
+        $('#hoodtrooperModal .inside').html('');
+        $('#hoodtrooperModal .modal-loader').addClass('d-none');
     });
 
-    $(document).on('submit', '#loginForm', function(e) {
-        e.preventDefault();
+    //Modal show
+    $('#hoodtrooperModal').on('show.bs.modal', function (e) {
+        const loadUrl = $(e.relatedTarget).data('modal-url');
+        const title = $(e.relatedTarget).data('modal-title');
 
+        $('#hoodtrooperModal .modal-title').html(title);
+        $('#hoodtrooperModal .inside').html('');
+        $('#hoodtrooperModal .modal-loader').removeClass('d-none');
+
+        $.get(loadUrl, function(e) {
+        })
+        .done(function(data) {
+            $('#hoodtrooperModal .inside').html(data);
+            $('#hoodtrooperModal .modal-loader').addClass('d-none');
+        })
+        .fail(function() {
+            $('#hoodtrooperModal .inside').html('an error occured - try again');
+            $('#hoodtrooperModal .modal-loader').addClass('d-none');
+        })
+        .always(function() {
+        });
+    });
+
+    $(document).on('submit', '.ajax-form', function(e) {
+        e.preventDefault();
         const form = $(this);
+        const formWrap = $(this).parent();
+
+        // const modalInside = formWrap.html();
+        // formWrap.html('<p>Sending form...</p>' + modalInside);
+        formWrap.html('<p>Sending form...</p>');
+
+        const disabledElements = form.find(':disabled').removeAttr('disabled');
+        const serializedForm = form.serialize();
+        disabledElements.attr('disabled','disabled');
 
         $.ajax({
             url : form.attr('action'),
             type: form.attr('method'),
-            data : form.serialize(),
+            data : serializedForm,
             success: function(data) {
-                if(data.logged_in_auth || data.logged_in){
-                    console.log('reloading');
+                if(data.success_ajax_form){
                     reloadPage();
-                // }else if(data.failed_login){
-                //     console.log('failed login');
-                //     $('#popup .inside').html('loading failed login...');
-                //     $('#popup .inside').html(data.failed_login);
                 }else{
-                    $('#popup .inside').html('elsee...');
-                    $('#popup .inside').html(data);
+                    formWrap.html(data);
                 }
             }
         });
@@ -192,6 +216,8 @@ const typeListElem = document.getElementById('type-list');
 const summaryListElem = document.getElementById('summary-list');
 let map;
 let tooltip;
+
+const tempTooltipMarkerContent = document.getElementById('add-new-place-content');
 
 // generate basic nodes
 let expandedCategoryListNode = document.createElement('ul');
@@ -233,6 +259,10 @@ const mapModel = {
             this.tempMarker.tooltip.close();
         }
     },
+    // fillTempMarker: function () {
+    //     this.tempMarker.tooltip.setContent(content);
+    //     this.tempMarker.tooltip.open(map, this.tempMarker.marker);
+    // }
     setTempMarker: function (markerData) {
         //close temp marker
         this.closeTempMarker();
@@ -242,22 +272,48 @@ const mapModel = {
 
         //tooltip window
         this.tempMarker.tooltip = new google.maps.InfoWindow();
-        let content = `
+
+        //loading markup
+        let contentLoading = `
           <div class="tooltip__container">
             <span class="border__top" style="background-color: #a35256"></span>
             <div class="tooltip__header">
-              <p>head</p>
             </div>
             <div class="tooltip__body">
-              <p>brzuszek</p>
+                <p>Loading..</p>
             </div>
             <div class="tooltip__footer">
-              <p>footer</p>
             </div>
           </div>`;
 
-        this.tempMarker.tooltip.setContent(content);
+        this.tempMarker.tooltip.setContent(contentLoading);
         this.tempMarker.tooltip.open(map, this.tempMarker.marker);
+
+        const marker = this.tempMarker;
+
+        // $.get('/hoodtrooper/place/new?latlng_from_map=' + markerData.position, function(e) {
+        $.get('/hoodtrooper/place_tooltip?latlng_from_map=' + markerData.position, function(e) {
+        })
+        .done(function(data) {
+            let content = `
+              <div class="tooltip__container">
+                <span class="border__top" style="background-color: #a35256"></span>
+                <div class="tooltip__header">
+                    <p>Add new place</p>
+                </div>
+                <div class="tooltip__body">
+                  ` + data + `
+                </div>
+                <div class="tooltip__footer">
+                </div>
+              </div>`;
+
+            marker.tooltip.setContent(content);
+        })
+        .fail(function() {
+        })
+        .always(function() {
+        });
     }
 };
 
