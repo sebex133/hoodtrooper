@@ -1,19 +1,17 @@
 {#{% extends 'base.html.twig' %}#}
 
-{% block title %}Register{% endblock %}
+{#{% block title %}Register{% endblock %}#}
 
 {% form_theme registrationForm 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
-    <h1>Register</h1>
-
-    {{ form_start(registrationForm) }}
+    {{ form_start(registrationForm, {attr: {class: 'ajax-form', action: form_action_url } })  }}
         {{ form_row(registrationForm.email, {attr: {class: 'text-white bg-primary'} }) }}
         {{ form_row(registrationForm.plainPassword) }}
         {{ form_row(registrationForm.nickname) }}
         {{ form_row(registrationForm.sex) }}
         {{ form_row(registrationForm.birth_date) }}
-        {{ form_row(registrationForm.agreeTerms, {label_attr: {class: 'text-white bg-dark'} }) }}
+{#        {{ form_row(registrationForm.agreeTerms, {label_attr: {class: 'text-white bg-dark'} }) }}#}
 
         <button type="submit" class="btn btn-success">Register</button>
     {{ form_end(registrationForm) }}

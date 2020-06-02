@@ -22,6 +22,7 @@ class HoodtrooperPlaceType extends AbstractType
             ->add('private_area_place')
             ->add('discover_date', BirthdayType::class, [
                 'format' => 'dd-MM-yyyy',
+                'data' => new \DateTime('now -1 day'),
             ])
             ->add('description', TextareaType::class, [
 //                'attr' => ['class' => 'tinymce'],

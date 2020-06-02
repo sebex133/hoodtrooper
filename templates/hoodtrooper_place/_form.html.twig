@@ -14,13 +14,13 @@
     {{ form_row(form.recommendation_level) }}
     {{ form_row(form.image) }}
     {% if latVal %}
-        {{ form_row(form.coordinate_lat, {attr: {disabled: 'disabled', value: latVal } }) }}
+        {{ form_row(form.coordinate_lat, {attr: {disabled: 'disabled', 'hidden': true, value: latVal } }) }}
     {% else %}
 {#        {{ form_row(form.coordinate_lat, {attr: {disabled: 'disabled'} }) }}#}
         {{ form_row(form.coordinate_lat, {attr: {} }) }}
     {% endif %}
     {% if lngVal %}
-        {{ form_row(form.coordinate_lng, {attr: {disabled: 'disabled', value: lngVal } }) }}
+        {{ form_row(form.coordinate_lng, {attr: {disabled: 'disabled', 'hidden': true, value: lngVal } }) }}
     {% else %}
         {#        {{ form_row(form.coordinate_lng, {attr: {disabled: 'disabled'} }) }}#}
         {{ form_row(form.coordinate_lng, {attr: {} }) }}

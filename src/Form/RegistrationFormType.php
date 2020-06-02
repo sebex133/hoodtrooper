@@ -23,6 +23,7 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
+                'label' => 'Password',
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
@@ -44,16 +45,17 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('birth_date', BirthdayType::class, [
-
+                'format' => 'dd-MM-yyyy',
+                'data' => new \DateTime('now -18 year'),
             ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
+//            ->add('agreeTerms', CheckboxType::class, [
+//                'mapped' => false,
+//                'constraints' => [
+//                    new IsTrue([
+//                        'message' => 'You should agree to our terms.',
+//                    ]),
+//                ],
+//            ])
         ;
     }
 

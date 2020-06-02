@@ -40,11 +40,13 @@ class RegistrationController extends AbstractController
 
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('hoodtrooper');
+            return $this->json(['success_ajax_form' => TRUE]);
+//            return $this->redirectToRoute('hoodtrooper');
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'form_action_url' => $request->getRequestUri(),
         ]);
     }
 }
