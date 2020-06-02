@@ -1,17 +1,26 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
-{#TODO action musi byc dynamiczne bo bedzie rozne dla new, edit, delete itp#}
-{{ form_start(form, {attr: {class: 'ajax-form', action: '/hoodtrooper/place/new' } })  }}
+{#{{ form_start(form, {attr: {class: 'ajax-form', action: path(formActionUrlVal) } })  }}#}
+{{ form_start(form, {attr: {class: 'ajax-form', action: formActionUrlVal } })  }}
 {#    {{ form_widget(form) }}#}
+    {% if form_errors(form) %}
+        <div class="alert alert-danger">{{ form_errors(form) }}}</div>
+    {% endif %}
 
     {{ form_row(form.title) }}
     {{ form_row(form.description) }}
     {{ form_row(form.image) }}
-    {% if latLngVal %}
-        {{ form_row(form.coordinates_latlng, {attr: {disabled: 'disabled', value: latLngVal } }) }}
+    {% if latVal %}
+        {{ form_row(form.coordinate_lat, {attr: {disabled: 'disabled', value: latVal } }) }}
     {% else %}
-{#        {{ form_row(form.coordinates_latlng, {attr: {disabled: 'disabled'} }) }}#}
-        {{ form_row(form.coordinates_latlng, {attr: {} }) }}
+{#        {{ form_row(form.coordinate_lat, {attr: {disabled: 'disabled'} }) }}#}
+        {{ form_row(form.coordinate_lat, {attr: {} }) }}
+    {% endif %}
+    {% if lngVal %}
+        {{ form_row(form.coordinate_lng, {attr: {disabled: 'disabled', value: lngVal } }) }}
+    {% else %}
+        {#        {{ form_row(form.coordinate_lng, {attr: {disabled: 'disabled'} }) }}#}
+        {{ form_row(form.coordinate_lng, {attr: {} }) }}
     {% endif %}
 
     <button class="btn btn-success">{{ button_label|default('Save') }}</button>

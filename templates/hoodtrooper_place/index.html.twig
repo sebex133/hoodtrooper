@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{#{% extends 'base.html.twig' %}#}
 
 {% block title %}HoodtrooperPlace index{% endblock %}
 
@@ -10,7 +10,8 @@
             <tr>
                 <th>Id</th>
                 <th>Title</th>
-                <th>Coordinates_latlng</th>
+                <th>coordinateLat</th>
+                <th>coordinateLng</th>
                 <th>Description</th>
                 <th>Filename</th>
                 <th>actions</th>
@@ -21,14 +22,15 @@
             <tr>
                 <td>{{ hoodtrooper_place.id }}</td>
                 <td>{{ hoodtrooper_place.title }}</td>
-                <td>{{ hoodtrooper_place.coordinatesLatlng }}</td>
+                <td>{{ hoodtrooper_place.coordinateLat }}</td>
+                <td>{{ hoodtrooper_place.coordinateLng }}</td>
                 <td>{{ hoodtrooper_place.description }}</td>
                 <td>
                     <p>
                         {{ hoodtrooper_place.placeImageFilename }}
                     </p>
 {#                    <img src="{{ asset(hoodtrooper_place_images_directory ~ '/' ~ hoodtrooper_place.placeImageFilename) }}"/>#}
-                    <img src="{{ '/uploads/hoodtrooper_places_images/' ~ hoodtrooper_place.placeImageFilename }}"/>
+{#                    <img src="{{ '/uploads/hoodtrooper_places_images/' ~ hoodtrooper_place.placeImageFilename }}"/>#}
                 </td>
                 <td>
                     <a href="{{ path('hoodtrooper_place_show', {'id': hoodtrooper_place.id}) }}">show</a>

@@ -25,7 +25,12 @@ class HoodtrooperPlace
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $coordinates_latlng;
+    private $coordinate_lat;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $coordinate_lng;
 
     /**
      * @ORM\Column(type="string", length=2000, nullable=true)
@@ -54,14 +59,26 @@ class HoodtrooperPlace
         return $this;
     }
 
-    public function getCoordinatesLatlng(): ?string
+    public function getCoordinateLat(): ?string
     {
-        return $this->coordinates_latlng;
+        return $this->coordinate_lat;
     }
 
-    public function setCoordinatesLatlng(string $coordinates_latlng): self
+    public function setCoordinateLat(string $coordinate_lat): self
     {
-        $this->coordinates_latlng = $coordinates_latlng;
+        $this->coordinate_lat = $coordinate_lat;
+
+        return $this;
+    }
+
+    public function getCoordinateLng(): ?string
+    {
+        return $this->coordinate_lng;
+    }
+
+    public function setCoordinateLng(string $coordinate_lng): self
+    {
+        $this->coordinate_lng = $coordinate_lng;
 
         return $this;
     }

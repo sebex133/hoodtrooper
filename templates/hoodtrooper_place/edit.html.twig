@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Edit HoodtrooperPlace</h1>
 
-    {{ include('hoodtrooper_place/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('hoodtrooper_place/_form.html.twig', { latVal: lat, lngVal: lng, formActionUrlVal: form_action_url, button_label: 'Update'}) }}
 
     <a href="{{ path('hoodtrooper_place_index') }}">back to list</a>
 

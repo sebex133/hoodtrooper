@@ -17,6 +17,7 @@ class HoodtrooperController extends AbstractController
         return $this->render('hoodtrooper/index.html.twig', [
             'sign_in_title' => 'Sign in',
             'sign_up_title' => 'Sign up',
+            'show_all_places_title' => 'Show all places',
             'add_new_place_title' => 'Add new place',
             'controller_name' => 'HoodtrooperController',
         ]);
@@ -27,13 +28,16 @@ class HoodtrooperController extends AbstractController
      */
     public function place_tooltip(Request $request): Response
     {
-        $latLng = $request->query->get('latlng_from_map');
+        $lat = $request->query->get('lat');
+        $lng = $request->query->get('lng');
 
         return $this->render('hoodtrooper_place/place_tooltip.html.twig', [
             'sign_in_title' => 'Sign in',
             'sign_up_title' => 'Sign up',
+            'show_all_places_title' => 'Show all places',
             'add_new_place_title' => 'Add new place',
-            'latLng' => $latLng ? $latLng : '',
+            'lat' => $lat ? $lat : '',
+            'lng' => $lng ? $lng : '',
         ]);
     }
 }

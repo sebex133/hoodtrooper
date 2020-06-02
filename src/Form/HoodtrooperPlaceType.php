@@ -15,7 +15,8 @@ class HoodtrooperPlaceType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('coordinates_latlng')
+            ->add('coordinate_lat')
+            ->add('coordinate_lng')
             ->add('description')
             ->add('image', FileType::class, [
                 'label' => 'Place image (JPG/PNG)',

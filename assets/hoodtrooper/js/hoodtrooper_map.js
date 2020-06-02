@@ -180,25 +180,49 @@ $(document).ready(function(){
         });
     });
 
+    $(document).on('change', '.custom-file-input', function(e) {
+        const fileInput = e.target;
+        const label = $(fileInput).siblings('label[for="' + fileInput.id + '"');
+        const filename = fileInput.files[0].name;
+        label.html(filename);
+    });
+
     $(document).on('submit', '.ajax-form', function(e) {
         e.preventDefault();
         const form = $(this);
         const formWrap = $(this).parent();
 
-        // const modalInside = formWrap.html();
-        // formWrap.html('<p>Sending form...</p>' + modalInside);
         formWrap.html('<p>Sending form...</p>');
 
+        //enable disabled elements before serialization
         const disabledElements = form.find(':disabled').removeAttr('disabled');
-        const serializedForm = form.serialize();
+
+        //special serialization to also serialize File inputs
+        let formData = new FormData()
+        let formParams = form.serializeArray();
+
+        $.each(form.find('input[type="file"]'), function(i, tag) {
+            $.each($(tag)[0].files, function(i, file) {
+                formData.append(tag.name, file);
+            });
+        });
+
+        $.each(formParams, function(i, val) {
+            formData.append(val.name, val.value);
+        });
+
+        //disable elements again
         disabledElements.attr('disabled','disabled');
 
         $.ajax({
             url : form.attr('action'),
             type: form.attr('method'),
-            data : serializedForm,
+            data : formData,
+            processData: false,
+            contentType: false,
             success: function(data) {
                 if(data.success_ajax_form){
+                    formWrap.html('<p>Success! Reloading page...</p>');
                     reloadPage();
                 }else{
                     formWrap.html(data);
@@ -224,6 +248,7 @@ let expandedCategoryListNode = document.createElement('ul');
 let summaryListNode = document.createElement('ul');
 let categoryListNode = document.createElement('ul');
 let typesListNode = document.createElement('ul');
+var hoodtrooper_places = [];
 
 expandedCategoryListNode.classList.add('expanded__categories__list');
 summaryListNode.classList.add('summary__list', 'list_type--row');
@@ -242,7 +267,8 @@ const mapModel = {
         tooltip: false
     },
     init: function () {
-        this.projects = projects;
+        // this.projects = projects;
+        this.projects = hoodtrooper_places;
         this.categories = categories;
         this.types = types;
 
@@ -289,10 +315,9 @@ const mapModel = {
         this.tempMarker.tooltip.setContent(contentLoading);
         this.tempMarker.tooltip.open(map, this.tempMarker.marker);
 
-        const marker = this.tempMarker;
+        const markerTooltip = this.tempMarker.tooltip;
 
-        // $.get('/hoodtrooper/place/new?latlng_from_map=' + markerData.position, function(e) {
-        $.get('/hoodtrooper/place_tooltip?latlng_from_map=' + markerData.position, function(e) {
+        $.get('/hoodtrooper/place_tooltip?lat=' + this.tempMarker.marker.position.lat() + '&lng=' + this.tempMarker.marker.position.lng(), function(e) {
         })
         .done(function(data) {
             let content = `
@@ -308,7 +333,7 @@ const mapModel = {
                 </div>
               </div>`;
 
-            marker.tooltip.setContent(content);
+            markerTooltip.setContent(content);
         })
         .fail(function() {
         })
@@ -558,6 +583,21 @@ const mapController = {
 };
 
 function initMap () {
+
+    //get all places
+    $.get('/hoodtrooper/place/places_json', function(e) {
+    })
+    .done(function(data) {
+        if(data.places_json){
+            hoodtrooper_places = data.places_json;
+            createMap();
+        }
+    })
+    .fail(function() {
+    });
+}
+
+function createMap() {
     /**
      * Initialize simple map.
      * @type {google.maps.Map}

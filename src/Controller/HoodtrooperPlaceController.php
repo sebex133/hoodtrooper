@@ -30,6 +30,48 @@ class HoodtrooperPlaceController extends AbstractController
     }
 
     /**
+     * @Route("/places_json", name="hoodtrooper_places_json", methods={"GET"})
+     */
+    public function places_json(HoodtrooperPlaceRepository $hoodtrooperPlaceRepository): Response
+    {
+        $places =  $hoodtrooperPlaceRepository->findAll();
+        $places_json = [];
+
+        foreach ($places as $item){
+            $places_json[] = [
+                'position' => [
+                    'lat' => (float) $item->getCoordinateLat(),
+                    'lng' => (float) $item->getCoordinateLng(),
+                ],
+                'id' => (string) $item->getId(),
+                'filled' => true,
+                'color' => "#6A1E74",
+                "title" => $item->getTitle(),
+                "linkLabel" => $item->getTitle() . ' - show',
+                "linkDirection" => '/hoodtrooper/place/' . $item->getId() . '/show',
+                'tooltip' => [
+                    'items' => [
+                        [
+                            'label' => 'Description',
+                            'content' => $item->getDescription(),
+                        ],
+                        [
+                            'label' => 'Filename',
+                            'content' => $item->getPlaceImageFilename(),
+                        ],
+                    ],
+                ],
+            ];
+        }
+//
+//        print '<pre>';
+//        var_dump($places_json);
+//        die();
+
+        return $this->json(['places_json' => $places_json]);
+    }
+
+    /**
      * @Route("/new", name="hoodtrooper_place_new", methods={"GET","POST"})
      */
     public function new(Request $request, SluggerInterface $slugger): Response
@@ -78,12 +120,16 @@ class HoodtrooperPlaceController extends AbstractController
 //            return $this->redirectToRoute('hoodtrooper_place_index');
         }
 
-        $latLng = $request->query->get('latlng_from_map');
+        $lat = $request->query->get('lat');
+        $lng = $request->query->get('lng');
 
         return $this->render('hoodtrooper_place/new.html.twig', [
             'hoodtrooper_place' => $hoodtrooperPlace,
             'form' => $form->createView(),
-            'latLng' => $latLng ? $latLng : '',
+//            'form_action_url' =>$request->get('_route'),
+            'form_action_url' => $request->getRequestUri(),
+            'lat' => $lat ? $lat : '',
+            'lng' => $lng ? $lng : '',
         ]);
     }
 
@@ -134,10 +180,16 @@ class HoodtrooperPlaceController extends AbstractController
             return $this->redirectToRoute('hoodtrooper_place_index');
         }
 
+        $lat = $request->query->get('lat');
+        $lng = $request->query->get('lng');
+
         return $this->render('hoodtrooper_place/edit.html.twig', [
             'hoodtrooper_place' => $hoodtrooperPlace,
             'form' => $form->createView(),
-            'latLngVal' => '',
+//            'form_action_url' => $request->get('_route'),
+            'form_action_url' => $request->getRequestUri(),
+            'lat' => $lat ? $lat : '',
+            'lng' => $lng ? $lng : '',
         ]);
     }
 

@@ -12,7 +12,7 @@
 {% block body %}
 {#    <h1>Create new HoodtrooperPlace</h1>#}
 
-    {{ include('hoodtrooper_place/_form.html.twig', { latLngVal: latLng }) }}
+    {{ include('hoodtrooper_place/_form.html.twig', { latVal: lat, lngVal: lng, formActionUrlVal: form_action_url  }) }}
 
 {#    <a href="{{ path('hoodtrooper_place_index') }}">back to list</a>#}
 {% endblock %}
