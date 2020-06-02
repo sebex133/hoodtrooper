@@ -59,9 +59,15 @@ class HoodtrooperUser implements UserInterface
      */
     private $hoodtrooperUserAuthoredPlaces;
 
+    /**
+     * @ORM\OneToMany(targetEntity=HoodtrooperPlaceComment::class, mappedBy="comment_author", orphanRemoval=true)
+     */
+    private $hoodtrooperUserPlaceComments;
+
     public function __construct()
     {
         $this->hoodtrooperUserAuthoredPlaces = new ArrayCollection();
+        $this->hoodtrooperUserPlaceComments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -203,6 +209,37 @@ class HoodtrooperUser implements UserInterface
             // set the owning side to null (unless already changed)
             if ($hoodtrooperUserAuthoredPlace->getAuthor() === $this) {
                 $hoodtrooperUserAuthoredPlace->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|HoodtrooperPlaceComment[]
+     */
+    public function getHoodtrooperUserPlaceComments(): Collection
+    {
+        return $this->hoodtrooperUserPlaceComments;
+    }
+
+    public function addHoodtrooperUserPlaceComment(HoodtrooperPlaceComment $hoodtrooperUserPlaceComment): self
+    {
+        if (!$this->hoodtrooperUserPlaceComments->contains($hoodtrooperUserPlaceComment)) {
+            $this->hoodtrooperUserPlaceComments[] = $hoodtrooperUserPlaceComment;
+            $hoodtrooperUserPlaceComment->setCommentAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHoodtrooperUserPlaceComment(HoodtrooperPlaceComment $hoodtrooperUserPlaceComment): self
+    {
+        if ($this->hoodtrooperUserPlaceComments->contains($hoodtrooperUserPlaceComment)) {
+            $this->hoodtrooperUserPlaceComments->removeElement($hoodtrooperUserPlaceComment);
+            // set the owning side to null (unless already changed)
+            if ($hoodtrooperUserPlaceComment->getCommentAuthor() === $this) {
+                $hoodtrooperUserPlaceComment->setCommentAuthor(null);
             }
         }
 

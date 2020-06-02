@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\HoodtrooperPlaceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -62,6 +64,16 @@ class HoodtrooperPlace
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
+
+    /**
+     * @ORM\OneToMany(targetEntity=HoodtrooperPlaceComment::class, mappedBy="comment_related_place", orphanRemoval=true)
+     */
+    private $hoodtrooperPlaceComments;
+
+    public function __construct()
+    {
+        $this->hoodtrooperPlaceComments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -172,6 +184,37 @@ class HoodtrooperPlace
     public function setAuthor(?HoodtrooperUser $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|HoodtrooperPlaceComment[]
+     */
+    public function getHoodtrooperPlaceComments(): Collection
+    {
+        return $this->hoodtrooperPlaceComments;
+    }
+
+    public function addHoodtrooperPlaceComment(HoodtrooperPlaceComment $hoodtrooperPlaceComment): self
+    {
+        if (!$this->hoodtrooperPlaceComments->contains($hoodtrooperPlaceComment)) {
+            $this->hoodtrooperPlaceComments[] = $hoodtrooperPlaceComment;
+            $hoodtrooperPlaceComment->setCommentRelatedPlace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHoodtrooperPlaceComment(HoodtrooperPlaceComment $hoodtrooperPlaceComment): self
+    {
+        if ($this->hoodtrooperPlaceComments->contains($hoodtrooperPlaceComment)) {
+            $this->hoodtrooperPlaceComments->removeElement($hoodtrooperPlaceComment);
+            // set the owning side to null (unless already changed)
+            if ($hoodtrooperPlaceComment->getCommentRelatedPlace() === $this) {
+                $hoodtrooperPlaceComment->setCommentRelatedPlace(null);
+            }
+        }
 
         return $this;
     }
