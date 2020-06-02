@@ -120,8 +120,8 @@ const categories = [
 ];
 
 const types = [
-    'Natural place',
-    'Architecture'
+    'Image included',
+    'No image'
 ];
 
 const body = $('body');
@@ -516,7 +516,8 @@ const mapView = {
               </ul>
             </div>
             <div class="tooltip__footer">
-              <a href="${tooltipContent.linkDirection}" target="_blank">${tooltipContent.linkLabel}</a>
+                <button class="btn btn-dark" data-toggle="modal" data-target="#hoodtrooperModal" data-modal-title="${tooltipContent.linkLabel}" data-modal-url="${tooltipContent.linkDirection}">${tooltipContent.linkLabel}</button>
+<!--              <a href="${tooltipContent.linkDirection}" target="_blank">${tooltipContent.linkLabel}</a>-->
             </div>
           </div>`;
 

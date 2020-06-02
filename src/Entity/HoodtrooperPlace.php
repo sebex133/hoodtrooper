@@ -38,6 +38,11 @@ class HoodtrooperPlace
     private $description;
 
     /**
+     * @ORM\Column(type="string", length=2000, nullable=true)
+     */
+    private $recommendation_level;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      */
     private $place_image_filename;
@@ -91,6 +96,18 @@ class HoodtrooperPlace
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getRecommendationLevel(): ?string
+    {
+        return $this->recommendation_level;
+    }
+
+    public function setRecommendationLevel(?string $recommendation_level): self
+    {
+        $this->recommendation_level = $recommendation_level;
 
         return $this;
     }

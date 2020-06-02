@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\HoodtrooperPlace;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
@@ -15,9 +17,20 @@ class HoodtrooperPlaceType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('coordinate_lat')
-            ->add('coordinate_lng')
-            ->add('description')
+            ->add('description', TextareaType::class, [
+//                'attr' => ['class' => 'tinymce'],
+            ])
+            ->add('recommendation_level', ChoiceType::class, [
+                'expanded' => true,
+                'multiple' => false,
+                'choices'  => [
+                    '1' => 1,
+                    '2' => 2,
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5,
+                ],
+            ])
             ->add('image', FileType::class, [
                 'label' => 'Place image (JPG/PNG)',
 
@@ -42,6 +55,8 @@ class HoodtrooperPlaceType extends AbstractType
                     ])
                 ],
             ])
+            ->add('coordinate_lat')
+            ->add('coordinate_lng')
         ;
     }
 

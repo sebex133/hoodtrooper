@@ -44,12 +44,13 @@ class HoodtrooperPlaceController extends AbstractController
                     'lng' => (float) $item->getCoordinateLng(),
                 ],
                 'id' => (string) $item->getId(),
-                'filled' => true,
-                'color' => "#6A1E74",
-                "title" => $item->getTitle(),
-                "linkLabel" => $item->getTitle() . ' - show',
-                "linkDirection" => '/hoodtrooper/place/' . $item->getId() . '/show',
+                'filled' => $item->getPlaceImageFilename() ? true : false,
+                'color' => "#" . dechex(rand(0x000000, 0xFFFFFF)),
                 'tooltip' => [
+                    "title" => $item->getTitle(),
+//                    "linkLabel" => $item->getTitle() . ' - show',
+                    "linkLabel" => 'Show place',
+                    "linkDirection" => '/hoodtrooper/place/' . $item->getId(),
                     'items' => [
                         [
                             'label' => 'Description',
