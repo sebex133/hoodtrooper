@@ -4,7 +4,9 @@ namespace App\Form;
 
 use App\Entity\HoodtrooperPlace;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,6 +19,10 @@ class HoodtrooperPlaceType extends AbstractType
     {
         $builder
             ->add('title')
+            ->add('private_area_place')
+            ->add('discover_date', BirthdayType::class, [
+                'format' => 'dd-MM-yyyy',
+            ])
             ->add('description', TextareaType::class, [
 //                'attr' => ['class' => 'tinymce'],
             ])
@@ -31,6 +37,13 @@ class HoodtrooperPlaceType extends AbstractType
                     '5' => 5,
                 ],
             ])
+//            ->add('private_area_place', ChoiceType::class, [
+//                'expanded' => true,
+//                'multiple' => true,
+//                'choices'  => [
+//                    'Private area place!' => true,
+//                ],
+//            ])
             ->add('image', FileType::class, [
                 'label' => 'Place image (JPG/PNG)',
 

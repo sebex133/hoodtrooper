@@ -32,6 +32,14 @@
                 <td>{{ hoodtrooper_place.recommendationLevel }}</td>
             </tr>
             <tr>
+                <th>Private area place</th>
+                <td>{{ hoodtrooper_place.privateAreaPlace ? 'yes' : 'no' }}</td>
+            </tr>
+            <tr>
+                <th>Discover date</th>
+                <td>{{ hoodtrooper_place.discoverDate|date('d-m-Y') }}</td>
+            </tr>
+            <tr>
                 <th>Image</th>
                 <td>
                     <p>

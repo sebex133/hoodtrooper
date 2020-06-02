@@ -47,6 +47,16 @@ class HoodtrooperPlace
      */
     private $place_image_filename;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $discover_date;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $private_area_place;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +130,30 @@ class HoodtrooperPlace
     public function setPlaceImageFilename(?string $placeImageFilename): self
     {
         $this->place_image_filename = $placeImageFilename;
+
+        return $this;
+    }
+
+    public function getDiscoverDate(): ?\DateTimeInterface
+    {
+        return $this->discover_date;
+    }
+
+    public function setDiscoverDate(\DateTimeInterface $discover_date): self
+    {
+        $this->discover_date = $discover_date;
+
+        return $this;
+    }
+
+    public function getPrivateAreaPlace(): ?bool
+    {
+        return $this->private_area_place;
+    }
+
+    public function setPrivateAreaPlace(?bool $private_area_place): self
+    {
+        $this->private_area_place = $private_area_place;
 
         return $this;
     }
