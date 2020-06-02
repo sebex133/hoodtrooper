@@ -180,6 +180,28 @@ $(document).ready(function(){
         });
     });
 
+    $(document).on('click', '.reload-modal-content', function(e) {
+        const loadUrl = $(this).data('modal-url');
+        const title = $(this).data('modal-title');
+
+        $('#hoodtrooperModal .modal-title').html(title);
+        $('#hoodtrooperModal .inside').html('');
+        $('#hoodtrooperModal .modal-loader').removeClass('d-none');
+
+        $.get(loadUrl, function(e) {
+        })
+        .done(function(data) {
+            $('#hoodtrooperModal .inside').html(data);
+            $('#hoodtrooperModal .modal-loader').addClass('d-none');
+        })
+        .fail(function() {
+            $('#hoodtrooperModal .inside').html('an error occured - try again');
+            $('#hoodtrooperModal .modal-loader').addClass('d-none');
+        })
+        .always(function() {
+        });
+    });
+
     $(document).on('change', '.custom-file-input', function(e) {
         const fileInput = e.target;
         const label = $(fileInput).siblings('label[for="' + fileInput.id + '"');

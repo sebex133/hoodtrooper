@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\HoodtrooperUserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -51,6 +53,16 @@ class HoodtrooperUser implements UserInterface
      * @ORM\Column(type="date")
      */
     private $birth_date;
+
+    /**
+     * @ORM\OneToMany(targetEntity=HoodtrooperPlace::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $hoodtrooperUserAuthoredPlaces;
+
+    public function __construct()
+    {
+        $this->hoodtrooperUserAuthoredPlaces = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -162,6 +174,37 @@ class HoodtrooperUser implements UserInterface
     public function setBirthDate(\DateTimeInterface $birth_date): self
     {
         $this->birth_date = $birth_date;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|HoodtrooperPlace[]
+     */
+    public function getHoodtrooperUserAuthoredPlaces(): Collection
+    {
+        return $this->hoodtrooperUserAuthoredPlaces;
+    }
+
+    public function addHoodtrooperUserAuthoredPlace(HoodtrooperPlace $hoodtrooperUserAuthoredPlace): self
+    {
+        if (!$this->hoodtrooperUserAuthoredPlaces->contains($hoodtrooperUserAuthoredPlace)) {
+            $this->hoodtrooperUserAuthoredPlaces[] = $hoodtrooperUserAuthoredPlace;
+            $hoodtrooperUserAuthoredPlace->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHoodtrooperUserAuthoredPlace(HoodtrooperPlace $hoodtrooperUserAuthoredPlace): self
+    {
+        if ($this->hoodtrooperUserAuthoredPlaces->contains($hoodtrooperUserAuthoredPlace)) {
+            $this->hoodtrooperUserAuthoredPlaces->removeElement($hoodtrooperUserAuthoredPlace);
+            // set the owning side to null (unless already changed)
+            if ($hoodtrooperUserAuthoredPlace->getAuthor() === $this) {
+                $hoodtrooperUserAuthoredPlace->setAuthor(null);
+            }
+        }
 
         return $this;
     }

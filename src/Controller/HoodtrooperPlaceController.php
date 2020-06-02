@@ -64,10 +64,6 @@ class HoodtrooperPlaceController extends AbstractController
                 ],
             ];
         }
-//
-//        print '<pre>';
-//        var_dump($places_json);
-//        die();
 
         return $this->json(['places_json' => $places_json]);
     }
@@ -78,7 +74,9 @@ class HoodtrooperPlaceController extends AbstractController
     public function new(Request $request, SluggerInterface $slugger): Response
     {
         //only logged in users
-        if (!$this->getUser()) {
+        $hoodtrooperUser = $this->getUser();
+
+        if (!$hoodtrooperUser) {
             return $this->render('hoodtrooper_place/place_tooltip.html.twig', [
                 'sign_in_title' => 'Sign in',
                 'sign_up_title' => 'Sign up',
@@ -91,6 +89,9 @@ class HoodtrooperPlaceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFile = $form->get('image')->getData();
+
+            //set user reference
+            $hoodtrooperPlace->setAuthor($hoodtrooperUser);
 
             if($imageFile){
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -139,8 +140,12 @@ class HoodtrooperPlaceController extends AbstractController
      */
     public function show(HoodtrooperPlace $hoodtrooperPlace): Response
     {
+        //only author of place
+        $hoodtrooperUser = $this->getUser();
+
         return $this->render('hoodtrooper_place/show.html.twig', [
             'hoodtrooper_place' => $hoodtrooperPlace,
+            'is_author' => $hoodtrooperUser == $hoodtrooperPlace->getAuthor() ? true : false,
         ]);
     }
 
@@ -149,6 +154,16 @@ class HoodtrooperPlaceController extends AbstractController
      */
     public function edit(Request $request, HoodtrooperPlace $hoodtrooperPlace, SluggerInterface $slugger): Response
     {
+        //only author of place
+        $hoodtrooperUser = $this->getUser();
+
+        if ($hoodtrooperPlace->getAuthor() != $hoodtrooperUser) {
+            return $this->render('hoodtrooper_place/author_only.html.twig', [
+                'sign_in_title' => 'Sign in',
+                'sign_up_title' => 'Sign up',
+            ]);
+        }
+
         $form = $this->createForm(HoodtrooperPlaceType::class, $hoodtrooperPlace);
         $form->handleRequest($request);
 
@@ -199,6 +214,16 @@ class HoodtrooperPlaceController extends AbstractController
      */
     public function delete(Request $request, HoodtrooperPlace $hoodtrooperPlace): Response
     {
+        //only author of place
+        $hoodtrooperUser = $this->getUser();
+
+        if ($hoodtrooperPlace->getAuthor() != $hoodtrooperUser) {
+            return $this->render('hoodtrooper_place/author_only.html.twig', [
+                'sign_in_title' => 'Sign in',
+                'sign_up_title' => 'Sign up',
+            ]);
+        }
+
         if ($this->isCsrfTokenValid('delete'.$hoodtrooperPlace->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($hoodtrooperPlace);

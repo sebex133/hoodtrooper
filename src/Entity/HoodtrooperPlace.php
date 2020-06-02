@@ -57,6 +57,12 @@ class HoodtrooperPlace
      */
     private $private_area_place;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=HoodtrooperUser::class, inversedBy="hoodtrooperUserAuthoredPlaces")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +160,18 @@ class HoodtrooperPlace
     public function setPrivateAreaPlace(?bool $private_area_place): self
     {
         $this->private_area_place = $private_area_place;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?HoodtrooperUser
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?HoodtrooperUser $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
