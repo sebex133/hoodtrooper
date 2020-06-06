@@ -1,0 +1,39 @@
+Hoodtrooper - projekt 2 Technologie internetowe
+Wykonanie - Sebastian Pytel 95541 (II Inf. NS)
+
+Projekt oparty na Symfony - instalacja:
+    Install Symfony CLI
+    Git clone repository
+    Run composer install (PHP 7.2.5 required)
+    Set up the database in config/packages/doctrine.yaml
+    Run php bin/console doctrine:migrations:migrate
+    Run symfony server:start
+	
+Github repo: https://github.com/sebex133/hoodtrooper
+
+Informacje o projekcie zawarte w opisie repozytorium.
+
+Docelowa lokalizacja strony na serwerze dev: https://hoodtrooper.com (coming soon).
+
+Functionalities:
+
+    View places on map
+    Listing places in table with filters (image, your places)
+    Register and login
+    Add new places
+    Add comments to places
+    Manage places and comments
+
+Database tables:
+
+    Users - nickname, sex, age, avatar, references to places and opinions
+    Places - title, description, opinion, private place check, coordinates (from map), image, references to users and opinions
+    Comments to places - comment, references to places and users
+
+Used technologies:
+
+    Symfony 5.0.8
+    Google Maps API Javascript
+    Bootstrap 4.5 – UI framework
+    jQuery (asynchronous operations on notes)
+    Webpack - building frontend assets
