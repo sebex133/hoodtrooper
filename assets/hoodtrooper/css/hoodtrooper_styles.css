@@ -623,3 +623,8 @@ button.gm-ui-hover-effect,
     padding-right: 10px;
     border-right: 1px solid black;
 }
+
+.place_comments{
+    border-top: 1px dashed rgba(0,0,0,0.3);
+    padding-top: 30px;
+}

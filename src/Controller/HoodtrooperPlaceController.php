@@ -165,7 +165,7 @@ class HoodtrooperPlaceController extends AbstractController
         return $this->render('hoodtrooper_place/new.html.twig', [
             'hoodtrooper_place' => $hoodtrooperPlace,
             'form' => $form->createView(),
-            'form_action_url' =>$request->get('_route'),
+            'form_action_url' => $request->getRequestUri(),
             'lat' => $lat ? $lat : '',
             'lng' => $lng ? $lng : '',
         ]);
@@ -251,7 +251,6 @@ class HoodtrooperPlaceController extends AbstractController
         return $this->render('hoodtrooper_place/edit.html.twig', [
             'hoodtrooper_place' => $hoodtrooperPlace,
             'form' => $form->createView(),
-//            'form_action_url' => $request->get('_route'),
             'form_action_url' => $request->getRequestUri(),
             'lat' => $lat ? $lat : '',
             'lng' => $lng ? $lng : '',
