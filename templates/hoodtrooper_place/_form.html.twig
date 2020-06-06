@@ -12,7 +12,7 @@
     {{ form_row(form.image) }}
     {{ form_row(form.private_area_place) }}
     {{ form_row(form.discover_date) }}
-    {{ form_row(form.recommendation_level) }}
+    {{ form_row(form.recommendation_level, {attr: {class:'d-flex flex-row radios' }}) }}
     {% if latVal %}
         {{ form_row(form.coordinate_lat, {attr: {disabled: true, hidden: true, value: latVal }, label_attr: {hidden: true} }) }}
     {% else %}

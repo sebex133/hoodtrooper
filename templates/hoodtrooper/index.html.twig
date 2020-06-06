@@ -16,22 +16,25 @@
         <div class="loader">
             <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
         </div>
+        <div class="text-center py-3">
+            <p>Loading Hoodtrooper map...</p>
+        </div>
     </div>
     <div id="mapModal" class="map__modal">
         <div class="map__container">
             <div class="map__close">
                 {% if app.user %}
-                    <button class="btn btn-dark" data-toggle="modal" data-target="#hoodtrooperModal" data-modal-title="{{ show_all_places_title }}" data-modal-url="{{ path('hoodtrooper_place_index') }}">{{ show_all_places_title }}</button>
-                    <a class="btn btn-light" href="{{ path('app_logout') }}">Logout</a>
+                    <button class="btn btn-dark mx-1" data-toggle="modal" data-target="#hoodtrooperModal" data-modal-title="{{ show_all_places_title }}" data-modal-url="{{ path('hoodtrooper_place_index') }}">{{ show_all_places_title }}</button>
+                    <a class="btn btn-light mx-1" href="{{ path('app_logout') }}" onclick="return confirm('Are you sure you want to log out?');">Logout</a>
                 {% else %}
-                    <button class="btn btn-dark" data-toggle="modal" data-target="#hoodtrooperModal" data-modal-title="{{ sign_in_title }}" data-modal-url="{{ path('app_login') }}">{{ sign_in_title }}</button>
-                    <button class="btn btn-light" data-toggle="modal" data-target="#hoodtrooperModal" data-modal-title="{{ sign_up_title }}" data-modal-url="{{ path('app_register') }}">{{ sign_up_title }}</button>
+                    <button class="btn btn-dark mx-1" data-toggle="modal" data-target="#hoodtrooperModal" data-modal-title="{{ sign_in_title }}" data-modal-url="{{ path('app_login') }}">{{ sign_in_title }}</button>
+                    <button class="btn btn-light mx-1" data-toggle="modal" data-target="#hoodtrooperModal" data-modal-title="{{ sign_up_title }}" data-modal-url="{{ path('app_register') }}">{{ sign_up_title }}</button>
                 {% endif %}
 {#                <button id="mapClose" class="close__button" type="button"></button>#}
             </div>
             <div id="modal"></div>
             <div id="map"></div>
-            <div id="mapMenu" class="map__menu opened">
+            <div id="mapMenu" class="map__menu">
                 <div class="menu__list">
                     <button id="toggleMapMenu" class="toggle__map opened" type="button"><span></span><span></span></button>
                     <div class="menu__item item__filter">

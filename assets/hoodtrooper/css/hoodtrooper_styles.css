@@ -474,7 +474,8 @@
     letter-spacing:1.01px;
     font-size:14px;
     line-height:18px;
-    padding:40px 25px 38px 25px;
+    padding:25px 25px 25px 25px;
+    /*border-radius: 10px;*/
     position:relative;
     width:240px
 }
@@ -608,4 +609,17 @@ button.gm-ui-hover-effect,
     color:#000;
     font-family:"IBM Plex Mono", monospace;
     font-size:20px
+}
+
+.image-hoodtrooper{
+    max-width: 100%;
+}
+
+.radios .form-check {
+    margin-right: 6px;
+}
+
+.radios .form-check label{
+    padding-right: 10px;
+    border-right: 1px solid black;
 }

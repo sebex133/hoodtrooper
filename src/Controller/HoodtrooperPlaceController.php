@@ -52,6 +52,17 @@ class HoodtrooperPlaceController extends AbstractController
     }
 
     /**
+     * @Route("/places_authored", name="hoodtrooper_place_index_authored", methods={"GET"})
+     */
+    public function indexPlacesAuthored(HoodtrooperPlaceRepository $hoodtrooperPlaceRepository): Response
+    {
+        return $this->render('hoodtrooper_place/index.html.twig', [
+            'hoodtrooper_places' => $hoodtrooperPlaceRepository->findBy(['author' => $this->getUser()]),
+            'hoodtrooper_place_images_directory' => $this->getParameter('hoodtrooper_place_images_directory'),
+        ]);
+    }
+
+    /**
      * @Route("/places_json", name="hoodtrooper_places_json", methods={"GET"})
      */
     public function places_json(HoodtrooperPlaceRepository $hoodtrooperPlaceRepository): Response
@@ -142,7 +153,7 @@ class HoodtrooperPlaceController extends AbstractController
             $entityManager->flush();
 
             return $this->json(['success_ajax_form' => TRUE]);
-//            return $this->redirectToRoute('hoodtrooper_place_index');
+//            return $this->redirectToRoute('hoodtrooper');
         }
 
         $lat = $request->query->get('lat');
@@ -216,7 +227,9 @@ class HoodtrooperPlaceController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('hoodtrooper_place_index');
+
+            return $this->json(['success_ajax_form' => TRUE]);
+//            return $this->redirectToRoute('hoodtrooper');
         }
 
         $lat = $request->query->get('lat');
@@ -251,8 +264,12 @@ class HoodtrooperPlaceController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($hoodtrooperPlace);
             $entityManager->flush();
+
+
+            return $this->json(['success_ajax_form' => TRUE]);
+//            return $this->redirectToRoute('hoodtrooper');
         }
 
-        return $this->redirectToRoute('hoodtrooper_place_index');
+        return $this->redirectToRoute('hoodtrooper');
     }
 }

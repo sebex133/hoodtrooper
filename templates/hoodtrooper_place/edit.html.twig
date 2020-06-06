@@ -1,13 +1,9 @@
-{% extends 'base.html.twig' %}
+{#{% extends 'base.html.twig' %}#}
 
-{% block title %}Edit HoodtrooperPlace{% endblock %}
+{#{% block title %}Edit HoodtrooperPlace{% endblock %}#}
 
 {% block body %}
-    <h1>Edit HoodtrooperPlace</h1>
+    {{ include('hoodtrooper_place/_form.html.twig', { latVal: lat, lngVal: lng, formActionUrlVal: form_action_url, button_label: 'Edit'}) }}
 
-    {{ include('hoodtrooper_place/_form.html.twig', { latVal: lat, lngVal: lng, formActionUrlVal: form_action_url, button_label: 'Update'}) }}
-
-    <a href="{{ path('hoodtrooper_place_index') }}">back to list</a>
-
-    {{ include('hoodtrooper_place/_delete_form.html.twig') }}
+{#    {{ include('hoodtrooper_place/_delete_form.html.twig') }}#}
 {% endblock %}

@@ -11,6 +11,8 @@ require('bootstrap');
 
 import '../scss/global.scss';
 
+var hoodtrooper_places = [];
+
 //Hoodtrooper map
 const projects = [
     {
@@ -71,41 +73,7 @@ const projects = [
     }
 ];
 
-const categories = [
-    {
-        "id": "all",
-        "label": "All investments",
-        "summaries": [
-            {
-                "label": "Places",
-                "value": "11"
-            },
-        ],
-        "color": "#FFD740"
-    },
-    {
-        "id": "with_image",
-        "label": "Place with image",
-        "summaries": [
-            {
-                "label": "Places",
-                "value": "33"
-            },
-        ],
-        "color": "#FF00FF"
-    },
-    {
-        "id": "no_image",
-        "label": "No image places",
-        "summaries": [
-            {
-                "label": "Places",
-                "value": "77"
-            },
-        ],
-        "color": "#00FF00"
-    }
-];
+var categories = [];
 
 const types = [
     'Place with image',
@@ -166,6 +134,10 @@ $(document).ready(function(){
         })
         .always(function() {
         });
+    });
+
+    $(document).on('click', '.close-tooltip', function(e) {
+        mapModel.closeTempMarker();
     });
 
     $(document).on('click', '.reload-modal-content', function(e) {
@@ -258,7 +230,6 @@ let expandedCategoryListNode = document.createElement('ul');
 let summaryListNode = document.createElement('ul');
 let categoryListNode = document.createElement('ul');
 let typesListNode = document.createElement('ul');
-var hoodtrooper_places = [];
 
 expandedCategoryListNode.classList.add('expanded__categories__list');
 summaryListNode.classList.add('summary__list', 'list_type--row');
@@ -311,12 +282,12 @@ const mapModel = {
 
         //loading markup
         let contentLoading = `
-          <div class="tooltip__container">
+          <div class="tooltip__container text-center">
             <span class="border__top" style="background-color: #a35256"></span>
             <div class="tooltip__header">
+                <p>Loading...</p>
             </div>
             <div class="tooltip__body">
-                <p>Loading..</p>
             </div>
             <div class="tooltip__footer">
             </div>
@@ -330,18 +301,7 @@ const mapModel = {
         $.get('/hoodtrooper/place_tooltip?lat=' + this.tempMarker.marker.position.lat() + '&lng=' + this.tempMarker.marker.position.lng(), function(e) {
         })
         .done(function(data) {
-            let content = `
-              <div class="tooltip__container">
-                <span class="border__top" style="background-color: #a35256"></span>
-                <div class="tooltip__header">
-                    <p>Add new place</p>
-                </div>
-                <div class="tooltip__body">
-                  ` + data + `
-                </div>
-                <div class="tooltip__footer">
-                </div>
-              </div>`;
+            let content = data;
 
             markerTooltip.setContent(content);
         })
@@ -453,7 +413,8 @@ const mapView = {
                 const listItem = this.generateListElement(template);
                 categoryListNode.appendChild(listItem);
 
-                this.renderNodes(categoryListNode, categoryListElem)
+                //off render
+                // this.renderNodes(categoryListNode, categoryListElem)
             }
         });
         types.forEach(type => {
@@ -511,25 +472,29 @@ const mapView = {
 
                 const tooltipContent = project.tooltip;
                 let content = `
-          <div class="tooltip__container">
-            <span class="border__top" style="background-color: ${project.color}"></span>
-            <div class="tooltip__header">
-              <span>${tooltipContent.title}</span>
-            </div>
-            <div class="tooltip__body">
-              <ul>
-          `;
-                tooltipContent.items.forEach(item => {
-                    content += `<li><span class="content__label">${item.label}</span><span class="content__content">${item.content}</span></li>`
-                });
-                content += `
-              </ul>
-            </div>
-            <div class="tooltip__footer">
-                <button class="btn btn-dark" data-toggle="modal" data-target="#hoodtrooperModal" data-modal-title="${tooltipContent.linkLabel}" data-modal-url="${tooltipContent.linkDirection}">${tooltipContent.linkLabel}</button>
-<!--              <a href="${tooltipContent.linkDirection}" target="_blank">${tooltipContent.linkLabel}</a>-->
-            </div>
-          </div>`;
+                  <div class="tooltip__container text-center">
+                        <span class="border__top" style="background-color: ${project.color}"></span>
+                        <div class="tooltip__header">
+                          <span>${tooltipContent.title}</span>
+                        </div>
+                        <div class="tooltip__body">`;
+
+                    // tooltipContent.items.forEach(item => {
+                    //     content += `<li><span class="content__label">${item.label}</span><span class="content__content">${item.content}</span></li>`
+                    // });
+
+                    content +=
+                        `</div>
+                        <div class="tooltip__footer">
+                            <button class="btn btn-sm btn-dark" 
+                            data-toggle="modal" 
+                            data-target="#hoodtrooperModal" 
+                            data-modal-title="${tooltipContent.title}" 
+                            data-modal-url="${tooltipContent.linkDirection}">
+                                ${tooltipContent.linkLabel}
+                            </button>
+                        </div>
+                    </div>`;
 
                 tooltip.setContent(content);
                 tooltip.open(map, marker);
@@ -590,6 +555,8 @@ const mapController = {
         mapView.filterCategory(categories[defaultCategoryIndex]);
         mapView.renderMarkers(mapModel.projects);
         mapView.generateElements(categories, mapModel.types);
+
+        mapMenu.toggleClass('opened');
     }
 };
 
@@ -601,6 +568,42 @@ function initMap () {
     .done(function(data) {
         if(data.places_json){
             hoodtrooper_places = data.places_json;
+
+            categories = [
+                {
+                    "id": "all",
+                    "label": "All places",
+                    "summaries": [
+                        {
+                            "label": "Places",
+                            "value": hoodtrooper_places.length ? hoodtrooper_places.length : 0,
+                        },
+                    ],
+                    "color": "#FFD740"
+                },
+                {
+                    "id": "with_image",
+                    "label": "Place with image",
+                    "summaries": [
+                        {
+                            "label": "Places",
+                            "value": "33"
+                        },
+                    ],
+                    "color": "#FF00FF"
+                },
+                {
+                    "id": "no_image",
+                    "label": "No image places",
+                    "summaries": [
+                        {
+                            "label": "Places",
+                            "value": "77"
+                        },
+                    ],
+                    "color": "#00FF00"
+                }
+            ];
             createMap();
         }
     })

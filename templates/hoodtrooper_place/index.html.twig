@@ -4,9 +4,10 @@
 
 {% block body %}
     <div class="pb-3">
-        <button class="btn btn-sm btn-info reload-modal-content px-1" data-modal-title="All places" data-modal-url="{{ path('hoodtrooper_place_index') }}">All places</button>
+        <button class="btn btn-sm btn-outline-dark reload-modal-content px-1" data-modal-title="All places" data-modal-url="{{ path('hoodtrooper_place_index') }}">All places</button>
         <button class="btn btn-sm btn-info reload-modal-content px-1" data-modal-title="Places with image" data-modal-url="{{ path('hoodtrooper_place_index_with_image') }}">Places with image</button>
         <button class="btn btn-sm btn-info reload-modal-content px-1" data-modal-title="No image places" data-modal-url="{{ path('hoodtrooper_place_index_no_image') }}">No image places</button>
+        <button class="btn btn-sm btn-success reload-modal-content px-1" data-modal-title="Your places" data-modal-url="{{ path('hoodtrooper_place_index_authored') }}">Your places</button>
     </div>
 
     <table class="table">
@@ -39,7 +40,14 @@
                 </td>
                 <td>
                     <button class="btn btn-sm btn-primary reload-modal-content" data-modal-title="{{ hoodtrooper_place.title }}" data-modal-url="{{ path('hoodtrooper_place_show', {'id': hoodtrooper_place.id}) }}">Show</button>
-{#                    <a href="{{ path('hoodtrooper_place_edit', {'id': hoodtrooper_place.id}) }}">edit</a>#}
+                    {% if app.user.id == hoodtrooper_place.author.id %}
+                        <button class="btn btn-sm btn-success reload-modal-content" data-modal-title="Edit - {{ hoodtrooper_place.title }}" data-modal-url="{{ path('hoodtrooper_place_edit', {'id': hoodtrooper_place.id}) }}">Edit</button>
+                        <form class="d-inline-block ajax-form" method="post" action="{{ path('hoodtrooper_place_delete', {'id': hoodtrooper_place.id}) }}" onclick="return confirm('Are you sure you want to delete this place?');">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ hoodtrooper_place.id) }}">
+                            <button class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
