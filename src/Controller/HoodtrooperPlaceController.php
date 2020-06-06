@@ -30,6 +30,28 @@ class HoodtrooperPlaceController extends AbstractController
     }
 
     /**
+     * @Route("/places_with_image", name="hoodtrooper_place_index_with_image", methods={"GET"})
+     */
+    public function indexPlacesWithImage(HoodtrooperPlaceRepository $hoodtrooperPlaceRepository): Response
+    {
+        return $this->render('hoodtrooper_place/index.html.twig', [
+            'hoodtrooper_places' => $hoodtrooperPlaceRepository->findByImageFieldFilled(true),
+            'hoodtrooper_place_images_directory' => $this->getParameter('hoodtrooper_place_images_directory'),
+        ]);
+    }
+
+    /**
+     * @Route("/places_no_image", name="hoodtrooper_place_index_no_image", methods={"GET"})
+     */
+    public function indexPlacesNoImage(HoodtrooperPlaceRepository $hoodtrooperPlaceRepository): Response
+    {
+        return $this->render('hoodtrooper_place/index.html.twig', [
+            'hoodtrooper_places' => $hoodtrooperPlaceRepository->findByImageFieldFilled(false),
+            'hoodtrooper_place_images_directory' => $this->getParameter('hoodtrooper_place_images_directory'),
+        ]);
+    }
+
+    /**
      * @Route("/places_json", name="hoodtrooper_places_json", methods={"GET"})
      */
     public function places_json(HoodtrooperPlaceRepository $hoodtrooperPlaceRepository): Response
@@ -43,7 +65,8 @@ class HoodtrooperPlaceController extends AbstractController
                     'lat' => (float) $item->getCoordinateLat(),
                     'lng' => (float) $item->getCoordinateLng(),
                 ],
-                'id' => (string) $item->getId(),
+                'place_id' => (string) $item->getId(),
+                'id' => $item->getPlaceImageFilename() ? 'with_image' : 'no_image',
                 'filled' => $item->getPlaceImageFilename() ? true : false,
                 'color' => "#" . dechex(rand(0x000000, 0xFFFFFF)),
                 'tooltip' => [

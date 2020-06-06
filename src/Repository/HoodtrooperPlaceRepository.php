@@ -19,6 +19,24 @@ class HoodtrooperPlaceRepository extends ServiceEntityRepository
         parent::__construct($registry, HoodtrooperPlace::class);
     }
 
+     /**
+      * @return HoodtrooperPlace[] Returns an array of HoodtrooperPlace objects
+      */
+    public function findByImageFieldFilled($filled = true)
+    {
+        $qb = $this->createQueryBuilder('h');
+
+        return $qb->andWhere(
+            $filled ?
+                $qb->expr()->isNotNull('h.place_image_filename')
+                :
+                $qb->expr()->isNull('h.place_image_filename')
+            )
+            ->orderBy('h.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return HoodtrooperPlace[] Returns an array of HoodtrooperPlace objects
     //  */

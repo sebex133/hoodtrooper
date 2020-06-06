@@ -1,53 +1,41 @@
-{% extends 'base.html.twig' %}
+{#{% extends 'base.html.twig' %}#}
 
-{% block title %}HoodtrooperPlace{% endblock %}
+{#{% block title %}HoodtrooperPlace{% endblock %}#}
 
 {% block body %}
-    <h1>HoodtrooperPlace</h1>
+    {% if hoodtrooper_place.placeImageFilename  %}
+        <div class="pb-2">
+            <img src="{{ '/uploads/hoodtrooper_places_images/' ~ hoodtrooper_place.placeImageFilename }}"/>
+        </div>
+    {% endif %}
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ hoodtrooper_place.id }}</td>
-            </tr>
             <tr>
                 <th>Title</th>
                 <td>{{ hoodtrooper_place.title }}</td>
             </tr>
             <tr>
-                <th>coordinateLat</th>
-                <td>{{ hoodtrooper_place.coordinateLat }}</td>
+                <th>Discover date</th>
+                <td>{{ hoodtrooper_place.discoverDate|date('d-m-Y') }}</td>
             </tr>
-            <tr>
-                <th>coordinateLng</th>
-                <td>{{ hoodtrooper_place.coordinateLng }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ hoodtrooper_place.description }}</td>
+            <th>Is this place public?</th>
+            <td>
+                {% if hoodtrooper_place.privateAreaPlace %}
+                    ❌
+                {% else %}
+                    ✅
+                {% endif %}
+            </td>
             </tr>
             <tr>
                 <th>Recommendation level</th>
                 <td>{{ hoodtrooper_place.recommendationLevel }}</td>
             </tr>
             <tr>
-                <th>Private area place</th>
-                <td>{{ hoodtrooper_place.privateAreaPlace ? 'yes' : 'no' }}</td>
-            </tr>
             <tr>
-                <th>Discover date</th>
-                <td>{{ hoodtrooper_place.discoverDate|date('d-m-Y') }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>
-                    <p>
-                        {{ hoodtrooper_place.placeImageFilename }}
-                    </p>
-                    {#                    <img src="{{ asset(hoodtrooper_place_images_directory ~ '/' ~ hoodtrooper_place.placeImageFilename) }}"/>#}
-                    <img src="{{ '/uploads/hoodtrooper_places_images/' ~ hoodtrooper_place.placeImageFilename }}"/>
-                </td>
+                <th>Description</th>
+                <td>{{ hoodtrooper_place.description }}</td>
             </tr>
         </tbody>
     </table>

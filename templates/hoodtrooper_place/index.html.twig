@@ -1,20 +1,22 @@
 {#{% extends 'base.html.twig' %}#}
 
-{% block title %}HoodtrooperPlace index{% endblock %}
+{#{% block title %}HoodtrooperPlace index{% endblock %}#}
 
 {% block body %}
-    <h1>HoodtrooperPlace index</h1>
+    <div class="pb-3">
+        <button class="btn btn-sm btn-info reload-modal-content px-1" data-modal-title="All places" data-modal-url="{{ path('hoodtrooper_place_index') }}">All places</button>
+        <button class="btn btn-sm btn-info reload-modal-content px-1" data-modal-title="Places with image" data-modal-url="{{ path('hoodtrooper_place_index_with_image') }}">Places with image</button>
+        <button class="btn btn-sm btn-info reload-modal-content px-1" data-modal-title="No image places" data-modal-url="{{ path('hoodtrooper_place_index_no_image') }}">No image places</button>
+    </div>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Title</th>
-                <th>coordinateLat</th>
-                <th>coordinateLng</th>
                 <th>Description</th>
-                <th>Filename</th>
-                <th>actions</th>
+                <th>Has image?</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -22,28 +24,30 @@
             <tr>
                 <td>{{ hoodtrooper_place.id }}</td>
                 <td>{{ hoodtrooper_place.title }}</td>
-                <td>{{ hoodtrooper_place.coordinateLat }}</td>
-                <td>{{ hoodtrooper_place.coordinateLng }}</td>
                 <td>{{ hoodtrooper_place.description }}</td>
                 <td>
-                    <p>
-                        {{ hoodtrooper_place.placeImageFilename }}
-                    </p>
+                    {% if hoodtrooper_place.placeImageFilename %}
+                        <p>✅</p>
+                    {% else %}
+                        <p>❌</p>
+                    {% endif %}
+{#                    <p>#}
+{#                        {{ hoodtrooper_place.placeImageFilename }}#}
+{#                    </p>#}
 {#                    <img src="{{ asset(hoodtrooper_place_images_directory ~ '/' ~ hoodtrooper_place.placeImageFilename) }}"/>#}
 {#                    <img src="{{ '/uploads/hoodtrooper_places_images/' ~ hoodtrooper_place.placeImageFilename }}"/>#}
                 </td>
                 <td>
-                    <a href="{{ path('hoodtrooper_place_show', {'id': hoodtrooper_place.id}) }}">show</a>
-                    <a href="{{ path('hoodtrooper_place_edit', {'id': hoodtrooper_place.id}) }}">edit</a>
+                    <button class="btn btn-sm btn-primary reload-modal-content" data-modal-title="{{ hoodtrooper_place.title }}" data-modal-url="{{ path('hoodtrooper_place_show', {'id': hoodtrooper_place.id}) }}">Show</button>
+{#                    <a href="{{ path('hoodtrooper_place_edit', {'id': hoodtrooper_place.id}) }}">edit</a>#}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">No places found...</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('hoodtrooper_place_new') }}">Create new</a>
 {% endblock %}

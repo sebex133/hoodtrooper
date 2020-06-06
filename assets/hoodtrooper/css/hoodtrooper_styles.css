@@ -330,7 +330,9 @@
 }
 .item__summary .summary__list {
     -ms-flex-wrap:nowrap;
-    flex-wrap:nowrap
+    flex-wrap:nowrap;
+    margin:0;
+    padding:0;
 }
 .item__summary li+li {
     margin-left:50px

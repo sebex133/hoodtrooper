@@ -77,51 +77,39 @@ const categories = [
         "label": "All investments",
         "summaries": [
             {
-                "label": "Projects",
-                "value": "85"
+                "label": "Places",
+                "value": "11"
             },
-            {
-                "label": "Countries",
-                "value": "55"
-            }
         ],
         "color": "#FFD740"
     },
     {
-        "id": "cat_180",
-        "label": "180",
+        "id": "with_image",
+        "label": "Place with image",
         "summaries": [
             {
-                "label": "Cats",
-                "value": "11"
+                "label": "Places",
+                "value": "33"
             },
-            {
-                "label": "Dogs",
-                "value": "44"
-            }
         ],
         "color": "#FF00FF"
     },
     {
-        "id": "cat_200",
-        "label": "200",
+        "id": "no_image",
+        "label": "No image places",
         "summaries": [
             {
-                "label": "Cats",
-                "value": "112"
+                "label": "Places",
+                "value": "77"
             },
-            {
-                "label": "Dogs",
-                "value": "443"
-            }
         ],
         "color": "#00FF00"
     }
 ];
 
 const types = [
-    'Image included',
-    'No image'
+    'Place with image',
+    'No image places'
 ];
 
 const body = $('body');

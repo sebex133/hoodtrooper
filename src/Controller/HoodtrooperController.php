@@ -17,7 +17,7 @@ class HoodtrooperController extends AbstractController
         return $this->render('hoodtrooper/index.html.twig', [
             'sign_in_title' => 'Sign in',
             'sign_up_title' => 'Sign up',
-            'show_all_places_title' => 'Show all places',
+            'show_all_places_title' => 'All places',
             'add_new_place_title' => 'Add new place',
             'controller_name' => 'HoodtrooperController',
         ]);
@@ -34,7 +34,7 @@ class HoodtrooperController extends AbstractController
         return $this->render('hoodtrooper_place/place_tooltip.html.twig', [
             'sign_in_title' => 'Sign in',
             'sign_up_title' => 'Sign up',
-            'show_all_places_title' => 'Show all places',
+            'show_all_places_title' => 'All places',
             'add_new_place_title' => 'Add new place',
             'lat' => $lat ? $lat : '',
             'lng' => $lng ? $lng : '',

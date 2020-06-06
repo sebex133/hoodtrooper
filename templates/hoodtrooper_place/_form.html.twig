@@ -9,18 +9,18 @@
 
     {{ form_row(form.title) }}
     {{ form_row(form.description) }}
+    {{ form_row(form.image) }}
     {{ form_row(form.private_area_place) }}
     {{ form_row(form.discover_date) }}
     {{ form_row(form.recommendation_level) }}
-    {{ form_row(form.image) }}
     {% if latVal %}
-        {{ form_row(form.coordinate_lat, {attr: {disabled: 'disabled', 'hidden': true, value: latVal } }) }}
+        {{ form_row(form.coordinate_lat, {attr: {disabled: true, hidden: true, value: latVal }, label_attr: {hidden: true} }) }}
     {% else %}
 {#        {{ form_row(form.coordinate_lat, {attr: {disabled: 'disabled'} }) }}#}
         {{ form_row(form.coordinate_lat, {attr: {} }) }}
     {% endif %}
     {% if lngVal %}
-        {{ form_row(form.coordinate_lng, {attr: {disabled: 'disabled', 'hidden': true, value: lngVal } }) }}
+        {{ form_row(form.coordinate_lng, {attr: {disabled: true, hidden: true, value: lngVal }, label_attr: {hidden: true} }) }}
     {% else %}
         {#        {{ form_row(form.coordinate_lng, {attr: {disabled: 'disabled'} }) }}#}
         {{ form_row(form.coordinate_lng, {attr: {} }) }}
