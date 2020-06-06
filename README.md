@@ -5,6 +5,12 @@ Tag your favourite places on Google Maps and share with people!
 
 Interactive graphics project: https://app.moqups.com/MIgWDVdRnJ/view/page/a892192c8
 
+Install:
+1. Git clone repository
+2. Run ```composer install``` (PHP 7.2.5 required)
+3. Set up the database in config/packages/doctrine.yaml
+4. Run ```php bin/console doctrine:migrations:migrate```
+
 Functionalities:
 1. View places on map
 2. Listing places in table with filters (image, your places)
