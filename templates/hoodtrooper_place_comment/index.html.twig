@@ -10,7 +10,7 @@
                 <td class="font-italic">{{ hoodtrooper_place_comment.getCommentAuthor().getNickname() }}</td>
                 <td class="p-2"><p class="alert alert-info">{{ hoodtrooper_place_comment.commentText }}</p></td>
                 <td class="text-right">
-                    {% if hoodtrooper_place_comment.getCommentAuthor().getId() == app.user.getId() %}
+                    {% if app.user and hoodtrooper_place_comment.getCommentAuthor().getId() == app.user.getId() %}
                         {{ include('hoodtrooper_place_comment/_delete_form.html.twig') }}
                     {% endif %}
                 </td>

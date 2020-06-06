@@ -17,13 +17,13 @@
         {{ form_row(form.coordinate_lat, {attr: {disabled: true, hidden: true, value: latVal }, label_attr: {hidden: true} }) }}
     {% else %}
 {#        {{ form_row(form.coordinate_lat, {attr: {disabled: 'disabled'} }) }}#}
-        {{ form_row(form.coordinate_lat, {attr: {} }) }}
+        {{ form_row(form.coordinate_lat, {attr: {disabled: true, hidden: true }, label_attr: {hidden: true} }) }}
     {% endif %}
     {% if lngVal %}
         {{ form_row(form.coordinate_lng, {attr: {disabled: true, hidden: true, value: lngVal }, label_attr: {hidden: true} }) }}
     {% else %}
         {#        {{ form_row(form.coordinate_lng, {attr: {disabled: 'disabled'} }) }}#}
-        {{ form_row(form.coordinate_lng, {attr: {} }) }}
+        {{ form_row(form.coordinate_lng, {attr: {disabled: true, hidden: true }, label_attr: {hidden: true} }) }}
     {% endif %}
 
     <button class="btn btn-success">{{ button_label|default('Save') }}</button>

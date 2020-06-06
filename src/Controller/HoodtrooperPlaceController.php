@@ -187,11 +187,11 @@ class HoodtrooperPlaceController extends AbstractController
         return $this->render('hoodtrooper_place/show.html.twig', [
             'hoodtrooper_place' => $hoodtrooperPlace,
             'hoodtrooper_place_comments' => $hoodtrooperPlaceCommentRepository->findBy(['comment_related_place'=>$hoodtrooperPlace],['id'=>'DESC']),
-            'is_author' => $hoodtrooperUser->getId() == $hoodtrooperPlace->getAuthor()->getId() ? true : false,
+            'is_author' => $hoodtrooperUser && $hoodtrooperUser->getId() == $hoodtrooperPlace->getAuthor()->getId() ? true : false,
             'hoodtrooper_place_comment' => $hoodtrooperPlaceComment,
             'form' => $form->createView(),
             'form_comment_action_url' => '/hoodtrooper/place/comment/new',
-            'comment_author_id' => $hoodtrooperUser->getId(),
+            'comment_author_id' => $hoodtrooperUser ? $hoodtrooperUser->getId() : '0',
             'comment_place_id' => $hoodtrooperPlace->getId(),
         ]);
     }

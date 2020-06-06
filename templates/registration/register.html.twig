@@ -6,7 +6,8 @@
 
 {% block body %}
     {{ form_start(registrationForm, {attr: {class: 'ajax-form', action: form_action_url } })  }}
-        {{ form_row(registrationForm.email, {attr: {class: 'text-white bg-primary'} }) }}
+{#        {{ form_row(registrationForm.email, {attr: {class: 'text-white bg-primary'} }) }}#}
+        {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.plainPassword) }}
         {{ form_row(registrationForm.nickname) }}
         {{ form_row(registrationForm.sex) }}

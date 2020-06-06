@@ -46,14 +46,14 @@
         {{ include('/hoodtrooper_place/place_comments.html.twig') }}
     </div>
 
-{#    {% if is_author %}#}
-{#        <div class="row">#}
-{#            <div class="col-6 text-left">#}
-{#                <button class="btn btn-primary reload-modal-content" data-modal-title="Edit - {{ hoodtrooper_place.title }}" data-modal-url="{{ path('hoodtrooper_place_edit', {'id': hoodtrooper_place.id}) }}">Edit</button>#}
-{#            </div>#}
-{#            <div class="col-6 text-right">#}
-{#                {{ include('hoodtrooper_place/_delete_form.html.twig') }}#}
-{#            </div>#}
-{#        </div>#}
-{#    {% endif %}#}
+    {% if is_author %}
+        <div class="row">
+            <div class="col-6 text-left">
+                <button class="btn btn-primary reload-modal-content" data-modal-title="Edit - {{ hoodtrooper_place.title }}" data-modal-url="{{ path('hoodtrooper_place_edit', {'id': hoodtrooper_place.id}) }}">Edit</button>
+            </div>
+            <div class="col-6 text-right">
+                {{ include('hoodtrooper_place/_delete_form.html.twig') }}
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

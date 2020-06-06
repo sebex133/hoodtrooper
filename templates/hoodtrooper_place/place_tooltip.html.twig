@@ -18,9 +18,9 @@
             {% else %}
                 <p class="font-weight-bold">Is this a nice place?</p>
                 <p>Please, sign in to add some info about that place.</p>
-                <button class="btn btn-dark" data-modal-url="{{ path('app_login') }}" data-modal-title="{{ sign_in_title }}" data-toggle="modal" data-target="#hoodtrooperModal">{{ sign_in_title }}</button>
+                <button class="btn btn-sm btn-dark mb-2" data-modal-url="{{ path('app_login') }}" data-modal-title="{{ sign_in_title }}" data-toggle="modal" data-target="#hoodtrooperModal">{{ sign_in_title }}</button>
                 <p>Doesn't have an account - sign up now!</p>
-                <button class="btn btn-dark" data-modal-url="{{ path('app_register') }}" data-modal-title="{{ sign_up_title }}" data-toggle="modal" data-target="#hoodtrooperModal" >{{ sign_up_title }}</button>
+                <button class="btn btn-sm btn-dark" data-modal-url="{{ path('app_register') }}" data-modal-title="{{ sign_up_title }}" data-toggle="modal" data-target="#hoodtrooperModal" >{{ sign_up_title }}</button>
             {% endif %}
         </div>
 
@@ -28,11 +28,6 @@
             {% if app.user %}
                 <button class="btn btn-sm btn-success" data-modal-url="{{ path('hoodtrooper_place_new') }}?lat={{ lat }}&lng={{ lng }}" data-modal-title="{{ add_new_place_title }}" data-toggle="modal" data-target="#hoodtrooperModal">{{ add_new_place_title }}</button>
             {% else %}
-                <p class="font-weight-bold">Is this a nice place?</p>
-                <p>Please, sign in to add some info about that place.</p>
-                <button class="btn btn-dark" data-modal-url="{{ path('app_login') }}" data-modal-title="{{ sign_in_title }}" data-toggle="modal" data-target="#hoodtrooperModal">{{ sign_in_title }}</button>
-                <p>Doesn't have an account - sign up now!</p>
-                <button class="btn btn-dark" data-modal-url="{{ path('app_register') }}" data-modal-title="{{ sign_up_title }}" data-toggle="modal" data-target="#hoodtrooperModal" >{{ sign_up_title }}</button>
             {% endif %}
         </div>
 </div>
