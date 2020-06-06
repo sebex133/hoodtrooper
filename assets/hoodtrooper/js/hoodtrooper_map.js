@@ -212,6 +212,54 @@ $(document).ready(function(){
             }
         });
     });
+
+    $(document).on('submit', '.ajax-comment-form', function(e) {
+        e.preventDefault();
+        const form = $(this);
+        const formWrap = $(this).parent();
+        const wholeFormSection = $(this).closest('.place_comments');
+
+        if(form.hasClass('delete-comment')){
+            formWrap.html('<p>Deleting...</p>');
+        }else{
+            formWrap.html('<p>Sending comment...</p>');
+        }
+
+        //enable disabled elements before serialization
+        const disabledElements = form.find(':disabled').removeAttr('disabled');
+
+        //special serialization to also serialize File inputs
+        let formData = new FormData()
+        let formParams = form.serializeArray();
+
+        $.each(form.find('input[type="file"]'), function(i, tag) {
+            $.each($(tag)[0].files, function(i, file) {
+                formData.append(tag.name, file);
+            });
+        });
+
+        $.each(formParams, function(i, val) {
+            formData.append(val.name, val.value);
+        });
+
+        //disable elements again
+        disabledElements.attr('disabled','disabled');
+
+        $.ajax({
+            url : form.attr('action'),
+            type: form.attr('method'),
+            data : formData,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                if(data){
+                    wholeFormSection.html(data);
+                }else{
+                    wholeFormSection.html('There was a problem during comments retrieve from database...');
+                }
+            }
+        });
+    });
 });
 
 // globals - they should be initialized inside view (refactor)

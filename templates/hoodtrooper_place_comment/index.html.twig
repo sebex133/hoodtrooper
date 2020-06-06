@@ -1,0 +1,25 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}HoodtrooperPlaceComment index{% endblock %}#}
+
+{% block body %}
+    <table class="table">
+        <tbody>
+        {% for hoodtrooper_place_comment in hoodtrooper_place_comments %}
+            <tr>
+                <td>{{ hoodtrooper_place_comment.getCommentAuthor().getNickname() }}</td>
+                <td>{{ hoodtrooper_place_comment.commentText }}</td>
+                <td>
+                    {% if hoodtrooper_place_comment.getCommentAuthor().getId() == app.user.getId() %}
+                        {{ include('hoodtrooper_place_comment/_delete_form.html.twig') }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">No comments found...</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,7 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}New HoodtrooperPlaceComment{% endblock %}#}
+
+{% block body %}
+    {{ include('hoodtrooper_place_comment/_form.html.twig', { formActionUrlVal: form_comment_action_url  }) }}
+{% endblock %}

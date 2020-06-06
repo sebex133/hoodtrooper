@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\HoodtrooperPlace;
+use App\Entity\HoodtrooperPlaceComment;
+use App\Form\HoodtrooperPlaceCommentType;
 use App\Form\HoodtrooperPlaceType;
+use App\Repository\HoodtrooperPlaceCommentRepository;
 use App\Repository\HoodtrooperPlaceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -110,7 +113,7 @@ class HoodtrooperPlaceController extends AbstractController
         //only logged in users
         $hoodtrooperUser = $this->getUser();
 
-        if (!$hoodtrooperUser) {
+        if (!$hoodtrooperUser->getId()) {
             return $this->render('hoodtrooper_place/place_tooltip.html.twig', [
                 'sign_in_title' => 'Sign in',
                 'sign_up_title' => 'Sign up',
@@ -162,8 +165,7 @@ class HoodtrooperPlaceController extends AbstractController
         return $this->render('hoodtrooper_place/new.html.twig', [
             'hoodtrooper_place' => $hoodtrooperPlace,
             'form' => $form->createView(),
-//            'form_action_url' =>$request->get('_route'),
-            'form_action_url' => $request->getRequestUri(),
+            'form_action_url' =>$request->get('_route'),
             'lat' => $lat ? $lat : '',
             'lng' => $lng ? $lng : '',
         ]);
@@ -172,14 +174,25 @@ class HoodtrooperPlaceController extends AbstractController
     /**
      * @Route("/{id}", name="hoodtrooper_place_show", methods={"GET"})
      */
-    public function show(HoodtrooperPlace $hoodtrooperPlace): Response
+    public function show(HoodtrooperPlace $hoodtrooperPlace, HoodtrooperPlaceCommentRepository $hoodtrooperPlaceCommentRepository): Response
     {
-        //only author of place
+        //get actual user to check then if it's author
         $hoodtrooperUser = $this->getUser();
+
+        //place comment object for form
+        $hoodtrooperPlaceComment = new HoodtrooperPlaceComment();
+
+        $form = $this->createForm(HoodtrooperPlaceCommentType::class, $hoodtrooperPlaceComment);
 
         return $this->render('hoodtrooper_place/show.html.twig', [
             'hoodtrooper_place' => $hoodtrooperPlace,
-            'is_author' => $hoodtrooperUser == $hoodtrooperPlace->getAuthor() ? true : false,
+            'hoodtrooper_place_comments' => $hoodtrooperPlaceCommentRepository->findBy(['comment_related_place'=>$hoodtrooperPlace],['id'=>'DESC']),
+            'is_author' => $hoodtrooperUser->getId() == $hoodtrooperPlace->getAuthor()->getId() ? true : false,
+            'hoodtrooper_place_comment' => $hoodtrooperPlaceComment,
+            'form' => $form->createView(),
+            'form_comment_action_url' => '/hoodtrooper/place/comment/new',
+            'comment_author_id' => $hoodtrooperUser->getId(),
+            'comment_place_id' => $hoodtrooperPlace->getId(),
         ]);
     }
 
@@ -191,7 +204,7 @@ class HoodtrooperPlaceController extends AbstractController
         //only author of place
         $hoodtrooperUser = $this->getUser();
 
-        if ($hoodtrooperPlace->getAuthor() != $hoodtrooperUser) {
+        if ($hoodtrooperPlace->getAuthor()->getId() != $hoodtrooperUser->getId()) {
             return $this->render('hoodtrooper_place/author_only.html.twig', [
                 'sign_in_title' => 'Sign in',
                 'sign_up_title' => 'Sign up',
@@ -253,7 +266,7 @@ class HoodtrooperPlaceController extends AbstractController
         //only author of place
         $hoodtrooperUser = $this->getUser();
 
-        if ($hoodtrooperPlace->getAuthor() != $hoodtrooperUser) {
+        if ($hoodtrooperPlace->getAuthor()->getId() != $hoodtrooperUser->getId()) {
             return $this->render('hoodtrooper_place/author_only.html.twig', [
                 'sign_in_title' => 'Sign in',
                 'sign_up_title' => 'Sign up',
@@ -264,7 +277,6 @@ class HoodtrooperPlaceController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($hoodtrooperPlace);
             $entityManager->flush();
-
 
             return $this->json(['success_ajax_form' => TRUE]);
 //            return $this->redirectToRoute('hoodtrooper');
