@@ -6,12 +6,14 @@ Tag your favourite places on Google Maps and share with people!
 Interactive graphics project: https://app.moqups.com/MIgWDVdRnJ/view/page/a892192c8
 
 Install:
-1. Install Symfony CLI
+1. Install Symfony CLI, YARN package manager
 2. Git clone repository
 3. Run ```composer install``` (PHP 7.2.5 required)
 4. Set up the database in config/packages/doctrine.yaml
-5. Run ```php bin/console doctrine:migrations:migrate```
-6. Run ```symfony server:start```
+5. Run ```yarn install --ignore-engines```
+6. Run ```yarn run encore dev```
+7. Run ```php bin/console doctrine:migrations:migrate```
+8. Run ```symfony server:start```
 
 Functionalities:
 1. View places on map
